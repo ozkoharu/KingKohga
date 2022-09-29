@@ -15,7 +15,7 @@ const zoomlebel = 18;
 
 const BaseMap = () => {
     return (
-        <MapContainer center={position} zoom={zoomlebel}>
+        <MapContainer center={position} zoom={zoomlebel} scrollWheelZoom={false}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
