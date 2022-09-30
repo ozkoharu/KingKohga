@@ -7,3 +7,4 @@ const CarKanri = () => {
         </>
     )
 }
+export default CarKanri;
