@@ -1,18 +1,14 @@
 import { LatLng } from 'leaflet';
 import type { NextPage } from 'next'
 import dynamic from 'next/dynamic'
-import React, { createContext, useState } from 'react';
-import BaseMap from '../component/map/BaseMap'
-import WelcomePage from './WelcomePage';
+import React, { createContext, useEffect, useState } from 'react';
+import { Urltonumber } from '../component/onClickSetState/onClickSetState';
+import OriginPage from './Originpage';
 
-const DynamicMap = dynamic(() => {
-  return import('../component/map/BaseMap')
-},
-  { ssr: false }
-);
-
-//Providerの設定はここ
-//ダイナミックインポートは少しの間ここに置かせてくだ際
+export const PageStateContext = createContext({} as {
+  page: number
+  setPage: React.Dispatch<React.SetStateAction<number>>
+})
 
 export const LocationPointContext = createContext({} as {
   point: LatLng[]
@@ -23,11 +19,15 @@ export const LocationPointContext = createContext({} as {
 const Home: NextPage = () => {
   const [point, setPoint] = useState<LatLng[]>([]);
   const [poly, setPoly] = useState<LatLng[][]>([[]]);
+  const [page, setPage] = useState<number>(0);
 
+  useEffect(() => window.addEventListener('popstate', () => setPage(Urltonumber(window.location.pathname))), [])
   return (
     <>
       <LocationPointContext.Provider value={{ point, setPoint, poly, setPoly }}>
-        <WelcomePage />
+        <PageStateContext.Provider value={{ page, setPage }}>
+          <OriginPage />
+        </PageStateContext.Provider>
       </LocationPointContext.Provider>
     </>
   )

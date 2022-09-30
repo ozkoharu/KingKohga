@@ -1,0 +1,23 @@
+import React, { useContext } from "react";
+import { PageStateContext } from "../../pages";
+
+const pagePath = [
+    '/',
+    '/CarMenuPage',
+    '/DestinationMapPage',
+    '/ExistsRoutePage',
+    '/AddRoutePage',
+    '/CarWatchPage',
+    '/EndPage',
+    '/RouteSave',
+    '/WelcomePage'
+];
+
+export const OnClickSetState = (num: number, setPage: React.Dispatch<React.SetStateAction<number>>) => {
+    setPage(num)
+    window.history.pushState(null, '', pagePath[num]);
+}
+
+export const Urltonumber = (url: string) => pagePath.indexOf(url);
+
+

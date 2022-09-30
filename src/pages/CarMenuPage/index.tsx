@@ -1,28 +1,31 @@
-import Link from "next/link";
-import React from "react";
-
+import React, { useContext, useEffect } from "react";
+import { PageStateContext } from "..";
+import { BaseButton } from "../../component/atoms/button/BaseButton";
+import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
 const CarMenuPage = () => {
+
+    const { page, setPage } = useContext(PageStateContext);
     return (
         <>
             <div>
-                <Link href="/DestinationMapPage">
-                    <a>新規ルート開拓</a>
-                </Link>
+                <BaseButton onClick={() => OnClickSetState(2, setPage)} isSubmit={false}>
+                    新規ルート開拓
+                </BaseButton>
             </div>
             <div>
-                <Link href="/ExistsRoutePage">
-                    <a>既存ルートで行く</a>
-                </Link>
+                <BaseButton onClick={() => OnClickSetState(3, setPage)} isSubmit={false}>
+                    既存ルート選択する
+                </BaseButton>
             </div>
             <div>
-                <Link href="/CarWatch">
-                    <a>俺の愛車見ちゃうよ</a>
-                </Link>
+                <BaseButton onClick={() => OnClickSetState(5, setPage)} isSubmit={false}>
+                    俺の愛車を見ちゃうぞ
+                </BaseButton>
             </div>
             <div>
-                <Link href="/EndPage">
-                    <a>車を愛車を廃車にしちゃうぞ</a>
-                </Link>
+                <BaseButton onClick={() => OnClickSetState(6, setPage)} isSubmit={false}>
+                    俺の愛車を廃車にしちゃうぞ
+                </BaseButton>
             </div>
         </>
     )
