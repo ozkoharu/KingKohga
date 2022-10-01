@@ -4,23 +4,32 @@ import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { BaseCheckBox } from "../../component/atoms/checkbox/BaseCheckBox";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
-import { PageStateContext } from "..";
+import { LocationPointContext, PageStateContext } from "..";
+import axios from "axios";
 
 const DynamicMap = dynamic(() => {
     return import('../../component/map/BaseMap')
 },
     { ssr: false }
 )
+const PostUrl = 'http://saza.kohga.local/Car/'
 
 const DestinationMapPage = () => {
     const { page, setPage } = useContext(PageStateContext);
+    const { point, setPoint } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
     const onClickJunkai = () => {
         setJunkai(!junkai);
     }
+    const PostData = {
+        "type": "watanabe",
+        "junkai": junkai,
+        "data": point
+    }
     const onClickRouteSearch = () => {
-        OnClickSetState(5, setPage);
+        //OnClickSetState(5, setPage);
         //ここにaxiosの処理
+        console.log(PostData);
     }
     return (
         <>
