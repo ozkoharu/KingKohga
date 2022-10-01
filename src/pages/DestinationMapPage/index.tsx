@@ -6,6 +6,7 @@ import { BaseHeader } from "../../component/template/Header/BaseHeader";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
 import { LocationPointContext, PageStateContext } from "..";
 import axios from "axios";
+import { LatLng } from "leaflet";
 
 const DynamicMap = dynamic(() => {
     return import('../../component/map/BaseMap')
@@ -16,7 +17,7 @@ const PostUrl = 'http://saza.kohga.local/Car/'
 
 const DestinationMapPage = () => {
     const { page, setPage } = useContext(PageStateContext);
-    const { point, setPoint } = useContext(LocationPointContext);
+    const { point, setPoint, poly, setPoly } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
     const onClickJunkai = () => {
         setJunkai(!junkai);
@@ -26,10 +27,20 @@ const DestinationMapPage = () => {
         "junkai": junkai,
         "data": point
     }
-    const onClickRouteSearch = () => {
+    let temp: LatLng[][] = [[]];
+    const onClickRouteSearch = async () => {
         //OnClickSetState(5, setPage);
         //ここにaxiosの処理
         console.log(PostData);
+        await axios.post(PostUrl, PostData)
+            .then((res) => {
+                temp = res.data;
+                setPoly(temp);
+            })
+            .catch(e => console.log('Post Error', e))
+            .finally(() => {
+                OnClickSetState(4, setPage);
+            })
     }
     return (
         <>
