@@ -62,7 +62,7 @@ const DestinationMapPage = () => {
                     </BaseButton>
                 </div>
                 <div>
-                    <BaseButton onClick={() => OnClickSetState(2, setPage)} isSubmit={false}>
+                    <BaseButton onClick={() => OnClickSetState(1, setPage)} isSubmit={false}>
                         戻る
                     </BaseButton>
                 </div>

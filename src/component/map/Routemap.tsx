@@ -11,7 +11,6 @@ L.Icon.Default.imagePath = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1
 const position = new LatLng(38.72311671577611, 141.0346841825174);
 const zoomlebel = 18;
 const redOptions = { color: "blue" }
-const dummypoly = [[]];
 
 const LinePoly = () => {
     const { poly, setPoly } = useContext(LocationPointContext);

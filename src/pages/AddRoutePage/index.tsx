@@ -7,7 +7,7 @@ import { BaseCheckBox } from "../../component/atoms/checkbox/BaseCheckBox";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
 
-const DynamicRouteMap = dynamic(() => {
+export const DynamicRouteMap = dynamic(() => {
     return import('../../component/map/Routemap')
 },
     { ssr: false }
@@ -24,6 +24,7 @@ const AddRoutePage = () => {
     const routeCheck = () => {
         //経路チェック
 
+        OnClickSetState(5, setPage)
     }
     const routeGoChcek = () => {
         //実行可能チェック
