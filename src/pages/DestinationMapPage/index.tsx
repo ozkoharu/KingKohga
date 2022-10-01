@@ -7,6 +7,8 @@ import { OnClickSetState } from "../../component/onClickSetState/onClickSetState
 import { LocationPointContext, PageStateContext } from "..";
 import axios from "axios";
 import { LatLng } from "leaflet";
+import BaseTextForm from "../../component/atoms/inputform/BaseInputForm";
+import e from "express";
 
 const DynamicMap = dynamic(() => {
     return import('../../component/map/BaseMap')
@@ -19,6 +21,9 @@ const DestinationMapPage = () => {
     const { page, setPage } = useContext(PageStateContext);
     const { point, setPoint, poly, setPoly } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
+
+
+
     const onClickJunkai = () => {
         setJunkai(!junkai);
     }
@@ -61,6 +66,7 @@ const DestinationMapPage = () => {
                         戻る
                     </BaseButton>
                 </div>
+
             </BaseHeader>
             <div className="gakubuti">
                 <DynamicMap />

@@ -17,6 +17,7 @@ const AddRoutePage = () => {
     const { page, setPage } = useContext(PageStateContext);
     const { point, setPoint, poly, setPoly } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
+    const [input, setInput] = useState('');
     const onClickJunkai = () => {
         setJunkai(!junkai);
     }
@@ -40,7 +41,10 @@ const AddRoutePage = () => {
                         経路確定
                     </BaseButton>
                 </div>
-                <h1>経路編集ページ</h1>
+                <div>
+                    <label htmlFor="input">経路名</label>
+                    <input type="text" onChange={(e) => setInput(e.target.value)} name="input" id="input" value={input} />
+                </div>
             </BaseHeader>
             <div className="gakubuti">
                 <DynamicRouteMap />
