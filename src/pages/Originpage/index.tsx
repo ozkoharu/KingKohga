@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
-import { PageStateContext } from "..";
+import React, { useContext, useEffect } from "react";
+import { LoadingContext, PageStateContext } from "..";
+import { PageLoading } from "../../component/hooks/pageLoading";
 import AddRoutePage from "../AddRoutePage";
 import CarKanri from "../CarKanri";
 import CarMenuPage from "../CarMenuPage";
@@ -9,14 +10,21 @@ import EndPage from "../EndPage";
 import ExistsRoutePage from "../ExistsRoutePage";
 import WelcomePage from "../WelcomePage";
 
-//stateによってページを遷移させたい
 
 const OriginPage = () => {
     const { page, setPage } = useContext(PageStateContext);
+    const { pageLoading, setPageLoading } = useContext(LoadingContext);
+    useEffect(() => {
+        setPageLoading(true);
+    }, []);
 
     if (page === 0 || page === 8) {
+
         return (
-            <WelcomePage />
+            <>
+                <WelcomePage />
+            </>
+
         )
     } else if (page === 1) {
         return (

@@ -11,3 +11,24 @@
   width: 100%;
   height: 55rem;
 }
+
+.loader {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  background-color: darkgray;
+}
+
+.nowlocading {
+  margin-top: 1rem;
+  color: white;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
