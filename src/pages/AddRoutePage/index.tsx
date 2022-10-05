@@ -1,4 +1,3 @@
-import axios from "axios";
 import dynamic from "next/dynamic";
 import React, { useContext, useState } from "react";
 import { LocationPointContext, PageStateContext } from "..";

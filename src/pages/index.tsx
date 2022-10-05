@@ -1,6 +1,5 @@
 import { LatLng } from 'leaflet';
 import type { NextPage } from 'next'
-import dynamic from 'next/dynamic'
 import React, { createContext, useEffect, useState } from 'react';
 import { Urltonumber } from '../component/onClickSetState/onClickSetState';
 import OriginPage from './Originpage';

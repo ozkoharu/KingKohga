@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { PageStateContext } from "..";
-import { PageLoading } from "../../component/hooks/pageLoading";
 import AddRoutePage from "../AddRoutePage";
 import CarKanri from "../CarKanri";
 import CarMenuPage from "../CarMenuPage";
@@ -12,7 +11,7 @@ import WelcomePage from "../WelcomePage";
 
 
 const OriginPage = () => {
-    const { page, setPage } = useContext(PageStateContext);
+    const { page } = useContext(PageStateContext);
 
 
     if (page === 0 || page === 8) {

@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { PageStateContext } from "../../pages";
+import React from "react";
 
 const pagePath = [
     '/',

@@ -8,7 +8,7 @@ import { LocationPointContext, PageStateContext } from "..";
 import axios from "axios";
 import { LatLng } from "leaflet";
 import { LoadingContext } from "../_app";
-import { PageLoading } from "../../component/hooks/pageLoading";
+
 
 const DynamicMap = dynamic(() => {
     return import('../../component/map/BaseMap')
@@ -18,10 +18,10 @@ const DynamicMap = dynamic(() => {
 const PostDummyUrl = 'http://saza.kohga.local:3000/route/Astar'
 
 const DestinationMapPage = () => {
-    const { page, setPage } = useContext(PageStateContext);
-    const { point, setPoint, poly, setPoly } = useContext(LocationPointContext);
+    const { setPage } = useContext(PageStateContext);
+    const { point, poly, setPoly } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
-    const { pageLoading, setPageLoading } = useContext(LoadingContext);
+    const { setPageLoading } = useContext(LoadingContext);
 
 
 

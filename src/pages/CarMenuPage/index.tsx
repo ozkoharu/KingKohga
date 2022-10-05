@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { PageStateContext } from "..";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";

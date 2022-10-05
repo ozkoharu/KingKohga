@@ -4,7 +4,7 @@ import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
 
 const EndPage = () => {
-    const { page, setPage } = useContext(PageStateContext);
+    const { setPage } = useContext(PageStateContext);
     return (
         <>
             <h1>ここは廃車になった愛車を眺めるところです</h1>

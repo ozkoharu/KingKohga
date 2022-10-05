@@ -5,7 +5,7 @@ import { OnClickSetState } from "../../component/onClickSetState/onClickSetState
 
 
 const WelcomePage = () => {
-    const { page, setPage } = useContext(PageStateContext);
+    const { setPage } = useContext(PageStateContext);
 
     return (
         <>
