@@ -7,8 +7,6 @@ import { OnClickSetState } from "../../component/onClickSetState/onClickSetState
 import { LocationPointContext, PageStateContext } from "..";
 import axios from "axios";
 import { LatLng } from "leaflet";
-import BaseTextForm from "../../component/atoms/inputform/BaseInputForm";
-import e from "express";
 import { LoadingContext } from "../_app";
 import { PageLoading } from "../../component/hooks/pageLoading";
 
