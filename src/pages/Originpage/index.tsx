@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { LoadingContext, PageStateContext } from "..";
+import { PageStateContext } from "..";
 import { PageLoading } from "../../component/hooks/pageLoading";
 import AddRoutePage from "../AddRoutePage";
 import CarKanri from "../CarKanri";
@@ -13,10 +13,7 @@ import WelcomePage from "../WelcomePage";
 
 const OriginPage = () => {
     const { page, setPage } = useContext(PageStateContext);
-    const { pageLoading, setPageLoading } = useContext(LoadingContext);
-    useEffect(() => {
-        setPageLoading(true);
-    }, []);
+
 
     if (page === 0 || page === 8) {
 

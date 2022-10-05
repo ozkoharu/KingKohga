@@ -18,6 +18,7 @@ const AddRoutePage = () => {
     const { point, setPoint, poly, setPoly } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
     const [input, setInput] = useState('');
+
     const onClickJunkai = () => {
         setJunkai(!junkai);
     }
@@ -29,6 +30,7 @@ const AddRoutePage = () => {
     const routeGoChcek = () => {
         //実行可能チェック
     }
+
     return (
         <>
             <BaseHeader>
