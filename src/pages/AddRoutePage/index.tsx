@@ -34,20 +34,22 @@ const AddRoutePage = () => {
     return (
         <>
             <BaseHeader>
-                <div>
-                    <BaseCheckBox onChange={onClickJunkai}>
-                        巡回ルート
-                    </BaseCheckBox>
-                </div>
+                <div className="bottomflex">
+                    <div>
+                        <BaseCheckBox onChange={onClickJunkai} >
+                            巡回ルート
+                        </BaseCheckBox>
+                    </div>
 
-                <div>
-                    <label htmlFor="input">経路名</label>
-                    <input type="text" onChange={(e) => setInput(e.target.value)} name="input" id="input" value={input} />
-                </div>
-                <div>
-                    <BaseButton onClick={routeCheck} isSubmit={false}>
-                        経路確定
-                    </BaseButton>
+                    <div>
+                        <label htmlFor="input">経路名</label>
+                        <input type="text" onChange={(e) => setInput(e.target.value)} name="input" id="input" value={input} />
+                    </div>
+                    <div>
+                        <BaseButton onClick={routeCheck} _className="buttom">
+                            経路確定
+                        </BaseButton>
+                    </div>
                 </div>
             </BaseHeader>
             <div className="gakubuti">

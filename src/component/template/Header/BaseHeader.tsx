@@ -12,9 +12,6 @@ export const BaseHeader: React.FC<Props> = ({
     return (
         <header>
             <div>
-                {title}
-            </div>
-            <div>
                 {children}
             </div>
         </header>

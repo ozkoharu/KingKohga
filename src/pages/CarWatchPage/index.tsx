@@ -10,7 +10,7 @@ const CarWatchPage = () => {
         <>
             <h1>愛車を眺めるぜ</h1>
             <div>
-                <BaseButton onClick={() => OnClickSetState(1, setPage)} isSubmit={false}>
+                <BaseButton onClick={() => OnClickSetState(1, setPage)} _className="buttom">
                     車メニューに戻る
                 </BaseButton>
             </div>

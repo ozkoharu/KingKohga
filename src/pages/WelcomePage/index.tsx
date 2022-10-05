@@ -9,13 +9,11 @@ const WelcomePage = () => {
 
     return (
         <>
-            <div>
-                <BaseButton onClick={() => OnClickSetState(1, setPage)} isSubmit={false}>
+            <div className="buttomflex">
+                <BaseButton onClick={() => OnClickSetState(1, setPage)} _className="buttom">
                     車を使う
                 </BaseButton>
-            </div>
-            <div>
-                <BaseButton onClick={() => OnClickSetState(7, setPage)} isSubmit={false}>
+                <BaseButton onClick={() => OnClickSetState(7, setPage)} _className="buttom">
                     車管理マネージャ
                 </BaseButton>
             </div>

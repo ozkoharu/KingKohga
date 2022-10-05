@@ -9,7 +9,7 @@ const EndPage = () => {
         <>
             <h1>ここは廃車になった愛車を眺めるところです</h1>
             <div>
-                <BaseButton onClick={() => OnClickSetState(0, setPage)} isSubmit={false}>
+                <BaseButton onClick={() => OnClickSetState(0, setPage)} _className="buttom">
                     次の車をえらんでくれ
                 </BaseButton>
             </div>

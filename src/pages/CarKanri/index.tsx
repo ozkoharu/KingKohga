@@ -8,7 +8,7 @@ const CarKanri = () => {
     return (
         <>
             <h1>車管理ページ(仮)</h1>
-            <BaseButton onClick={() => OnClickSetState(0, setPage)} isSubmit={false}>
+            <BaseButton onClick={() => OnClickSetState(0, setPage)} _className="buttom">
                 ようこそジャパリパーク
             </BaseButton>
         </>

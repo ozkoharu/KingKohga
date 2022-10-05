@@ -9,18 +9,21 @@ import axios from "axios";
 import { LatLng } from "leaflet";
 import BaseTextForm from "../../component/atoms/inputform/BaseInputForm";
 import e from "express";
+import { LoadingContext } from "../_app";
+import { PageLoading } from "../../component/hooks/pageLoading";
 
 const DynamicMap = dynamic(() => {
     return import('../../component/map/BaseMap')
 },
     { ssr: false }
 )
-const PostUrl = 'http://saza.kohga.local/Car/'
+const PostDummyUrl = 'http://saza.kohga.local:3000/route/Astar'
 
 const DestinationMapPage = () => {
     const { page, setPage } = useContext(PageStateContext);
     const { point, setPoint, poly, setPoly } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
+    const { pageLoading, setPageLoading } = useContext(LoadingContext);
 
 
 
@@ -34,41 +37,45 @@ const DestinationMapPage = () => {
     }
     let temp: LatLng[][] = [[]];
     const onClickRouteSearch = async () => {
-        //OnClickSetState(5, setPage);
         //ここにaxiosの処理
-        console.log(PostData);
-        await axios.post(PostUrl, PostData)
+        setPageLoading(true);
+        console.log("PostData", PostData);
+        await axios.post(PostDummyUrl, PostData)
             .then((res) => {
-                temp = res.data;
+                console.log('type', res.data.type);
+                console.log(res.data.data);
+                setPageLoading(false);
+                temp = res.data.data;
                 setPoly(temp);
             })
-            .catch(e => console.log('Post Error', e))
+            .catch(e => {
+                console.log('Post Error', e)
+                setPageLoading(false);
+            })
             .finally(() => {
                 OnClickSetState(4, setPage);
+                console.log('complete', poly);
             })
     }
     return (
         <>
 
             <BaseHeader>
-                <div>
+                <div className="bottomflex">
                     <BaseCheckBox onChange={onClickJunkai} >
                         巡回ルート
                     </BaseCheckBox>
-                </div>
-                <div>
-                    <BaseButton onClick={onClickRouteSearch} isSubmit={false}>
+                    <BaseButton onClick={onClickRouteSearch} _className="buttom">
                         経路探索
                     </BaseButton>
-                </div>
-                <div>
-                    <BaseButton onClick={() => OnClickSetState(1, setPage)} isSubmit={false}>
+                    <BaseButton onClick={() => OnClickSetState(1, setPage)} _className="buttom">
                         戻る
                     </BaseButton>
                 </div>
 
             </BaseHeader>
             <div className="gakubuti">
+
                 <DynamicMap />
             </div>
         </>
