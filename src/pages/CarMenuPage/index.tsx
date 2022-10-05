@@ -15,10 +15,10 @@ const CarMenuPage = () => {
                     既存ルート選択する
                 </BaseButton>
                 <BaseButton onClick={() => OnClickSetState(5, setPage)} _className="buttom">
-                    俺の愛車を見ちゃうぞ
+                    車を見る
                 </BaseButton>
                 <BaseButton onClick={() => OnClickSetState(6, setPage)} _className="buttom">
-                    俺の愛車を廃車にしちゃうぞ
+                    終わり
                 </BaseButton>
             </div>
         </>

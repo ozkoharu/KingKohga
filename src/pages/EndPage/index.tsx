@@ -7,10 +7,11 @@ const EndPage = () => {
     const { setPage } = useContext(PageStateContext);
     return (
         <>
-            <h1>ここは廃車になった愛車を眺めるところです</h1>
+            <h1>終わりです。</h1>
+
             <div>
                 <BaseButton onClick={() => OnClickSetState(0, setPage)} _className="buttom">
-                    次の車をえらんでくれ
+                    TOPへ戻る
                 </BaseButton>
             </div>
         </>
