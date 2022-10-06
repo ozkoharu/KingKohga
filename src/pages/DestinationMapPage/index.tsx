@@ -19,13 +19,18 @@ const PostDummyUrl = 'http://saza.kohga.local:3000/route/Astar'
 
 const DestinationMapPage = () => {
     const { setPage } = useContext(PageStateContext);
-    const { point, poly, setPoly } = useContext(LocationPointContext);
+    const { point, poly, setPoly, setPoint } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
     const { setPageLoading } = useContext(LoadingContext);
 
-
+    const onClickBack = () => {
+        setPoint([]);
+        setPoly([[]]);
+        OnClickSetState(1, setPage)
+    }
 
     const onClickJunkai = () => {
+
         setJunkai(!junkai);
     }
     const PostData = {
@@ -66,7 +71,7 @@ const DestinationMapPage = () => {
                     <BaseButton onClick={onClickRouteSearch} _className="buttom">
                         経路探索
                     </BaseButton>
-                    <BaseButton onClick={() => OnClickSetState(1, setPage)} _className="buttom">
+                    <BaseButton onClick={onClickBack} _className="buttom">
                         戻る
                     </BaseButton>
                 </div>
