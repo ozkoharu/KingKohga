@@ -13,7 +13,7 @@ const DynamicMap = dynamic(() => {
     { ssr: false }
 )
 
-const CarKanri = () => {
+const PathOK = () => {
     const { page, setPage } = useContext(PageStateContext);
     return (
         <>
@@ -22,11 +22,11 @@ const CarKanri = () => {
                 <BaseButton onClick={() => OnClickSetState(0, setPage)} _className="buttom">
                     TOPへ
                 </BaseButton>
-                <BaseButton onClick={() => OnClickSetState(8, setPage)} _className="buttom">
-                    通行可能領域設定
-                </BaseButton>
             </BaseHeader>
+            <div className="gakubuti">
+                <DynamicMap />
+            </div>
         </>
     )
 }
-export default CarKanri;
+export default PathOK;

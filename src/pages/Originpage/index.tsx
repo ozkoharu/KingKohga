@@ -8,13 +8,14 @@ import DestinationMapPage from "../DestinationMapPage";
 import EndPage from "../EndPage";
 import ExistsRoutePage from "../ExistsRoutePage";
 import WelcomePage from "../WelcomePage";
+import PathOK from "../PathOK";
 
 
 const OriginPage = () => {
     const { page } = useContext(PageStateContext);
 
 
-    if (page === 0 || page === 8) {
+    if (page === 0 || page === 9) {
 
         return (
             <>
@@ -49,6 +50,10 @@ const OriginPage = () => {
     } else if (page === 7) {
         return (
             <CarKanri />
+        )
+    } else if (page === 8) {
+        return (
+            <PathOK />
         )
     } else {
         /*　NEVER REACHED */

@@ -9,6 +9,7 @@ const pagePath = [
     '/CarWatchPage',
     '/EndPage',
     '/RouteSave',
+    '/PathOK',
     '/WelcomePage'
 ];
 
