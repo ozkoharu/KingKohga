@@ -10,6 +10,7 @@ const pagePath = [
     '/EndPage',
     '/RouteSave',
     '/PathOK',
+    '/AllCar',
     '/WelcomePage'
 ];
 

@@ -9,13 +9,14 @@ import EndPage from "../EndPage";
 import ExistsRoutePage from "../ExistsRoutePage";
 import WelcomePage from "../WelcomePage";
 import PathOK from "../PathOK";
+import AllCar from "../AllCar";
 
 
 const OriginPage = () => {
     const { page } = useContext(PageStateContext);
 
 
-    if (page === 0 || page === 9) {
+    if (page === 0 || page === 10) {
 
         return (
             <>
@@ -54,6 +55,10 @@ const OriginPage = () => {
     } else if (page === 8) {
         return (
             <PathOK />
+        )
+    } else if (page === 9) {
+        return (
+            <AllCar />
         )
     } else {
         /*　NEVER REACHED */
