@@ -29,24 +29,29 @@ const AddRoutePage = () => {
     const routeGoChcek = () => {
         //実行可能チェック
     }
+    const onClickBack = () => {
+        setPoint([]);
+        setPoly([[]]);
+        OnClickSetState(1, setPage)
+    }
 
     return (
         <>
             <BaseHeader>
                 <div className="bottomflex">
-                    <div>
+                    <div className="bottomflex">
                         <BaseCheckBox onChange={onClickJunkai} >
                             巡回ルート
                         </BaseCheckBox>
-                    </div>
 
-                    <div>
                         <label htmlFor="input">経路名</label>
                         <input type="text" onChange={(e) => setInput(e.target.value)} name="input" id="input" value={input} />
-                    </div>
-                    <div>
+
                         <BaseButton onClick={routeCheck} _className="buttom">
                             経路確定
+                        </BaseButton>
+                        <BaseButton onClick={onClickBack} _className="buttom">
+                            戻る
                         </BaseButton>
                     </div>
                 </div>
