@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { MapContainer, TileLayer, useMapEvents, Circle } from "react-leaflet"
 import { LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css"
-import { LocationPointContext } from "../../pages";
+import { CircleContext, LatLngRadius } from "../../pages";
 //Marker壊れたとき用
 import L from "leaflet"
 L.Icon.Default.imagePath = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/'
@@ -11,24 +11,30 @@ L.Icon.Default.imagePath = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1
 const position = new LatLng(38.72311671577611, 141.0346841825174);
 const zoomlebel = 18;
 
-const CircleMarker = () => {
 
-    const { point, setPoint } = useContext(LocationPointContext);
+const hoge: LatLngRadius[] = [];
+const CircleMarker = () => {
+    const { circle, setCircle, radius, setRadius } = useContext(CircleContext);
+
+
     useMapEvents({
         click(e) {
-            setPoint((prevValue) => {
-                const newValue = [...prevValue, e.latlng]
+            setCircle((prevValue) => {
+                const newValue = [...prevValue, { pos: e.latlng, r: radius }]
+                console.log('newValue', newValue)
                 return newValue
-            });
+            })
+
         }
     })
     return (
         <React.Fragment>
-            {point.map((point, index) =>
-                <Circle center={point}
+            {circle.map((e, index) =>
+                <Circle center={e.pos}
                     pathOptions={{ fillColor: "blue" }}
-                    radius={100}
+                    radius={e.r}
                     key={index}
+                    stroke={false}
                 />
             )}
         </React.Fragment>
