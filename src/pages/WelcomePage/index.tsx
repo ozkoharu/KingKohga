@@ -9,13 +9,14 @@ const Url = "http://saza.kohga.local:3001/createUser"
 const WelcomePage = () => {
     const { setPage } = useContext(PageStateContext);
     const { userId, setUserId } = useContext(UserIdContext);
+
     const onClickCaruse = async () => {
-
-
         await axios.get(Url)
             .then((res) => {
+
                 if (res.data.succeeded === true) {
                     setUserId(res.data.userId);
+                    console.log(setUserId);
                     OnClickSetState(1, setPage);
                 } else {
                     alert('車が空いていません。少し待っててね')

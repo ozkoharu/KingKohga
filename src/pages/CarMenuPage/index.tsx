@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { PageStateContext, UserIdContext } from "..";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
@@ -12,9 +12,13 @@ const CarMenuPage = () => {
     const { page, setPage } = useContext(PageStateContext);
 
     const onClickDestinationMap = async () => {
-        console.log(userId);
-        await axios.post(Url, userId)
+        console.log('userId', userId);
+
+        const postdata = { "userId": userId };
+
+        await axios.post(Url, postdata)
             .then((res) => {
+                console.log(res.data);
                 if (res.data.succeeded === true) {
                     OnClickSetState(2, setPage)
                 } else {
