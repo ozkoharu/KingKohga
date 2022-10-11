@@ -18,6 +18,7 @@ const WelcomePage = () => {
                     setUserId(res.data.userId);
                     OnClickSetState(1, setPage);
                 } else {
+                    alert('車が空いていません。少し待っててね')
                     setUserId('');
                 }
             })
