@@ -17,11 +17,12 @@ const CarMenuPage = () => {
             .then((res) => {
                 if (res.data.succeeded === true) {
                     OnClickSetState(2, setPage)
+                } else {
+                    alert('車が見つかりませんでした。時間を空けてもう一度お試しください')
                 }
             })
             .catch((e) => {
                 console.log(e);
-                console.log('車が空いていません')
             })
     }
 
