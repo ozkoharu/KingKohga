@@ -1,14 +1,34 @@
+import axios from "axios";
 import React, { useContext } from "react";
-import { PageStateContext } from "..";
+import { PageStateContext, UserIdContext } from "..";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
+
+const Url = "http://saza.kohga.local:3001/isAcceptable"
+
 const CarMenuPage = () => {
 
+    const { userId, setUserId } = useContext(UserIdContext);
     const { page, setPage } = useContext(PageStateContext);
+
+    const onClickDestinationMap = async () => {
+        console.log(userId);
+        await axios.post(Url, userId)
+            .then((res) => {
+                if (res.data.succeeded === true) {
+                    OnClickSetState(2, setPage)
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+                console.log('車が空いていません')
+            })
+    }
+
     return (
         <>
             <div className="buttomflex">
-                <BaseButton onClick={() => OnClickSetState(2, setPage)} _className="buttom">
+                <BaseButton onClick={onClickDestinationMap} _className="buttom">
                     新規ルート開拓
                 </BaseButton>
                 <BaseButton onClick={() => OnClickSetState(3, setPage)} _className="buttom">

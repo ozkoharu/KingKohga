@@ -11,12 +11,17 @@ const WelcomePage = () => {
     const { userId, setUserId } = useContext(UserIdContext);
     const onClickCaruse = async () => {
 
+
         await axios.get(Url)
             .then((res) => {
-                console.log('res', res);
-
+                if (res.data.succeeded === true) {
+                    setUserId(res.data.userId);
+                    OnClickSetState(1, setPage);
+                } else {
+                    setUserId('');
+                }
             })
-            .catch((e) => console.log(e));
+            .catch((e) => console.log(e))
     }
 
     return (
