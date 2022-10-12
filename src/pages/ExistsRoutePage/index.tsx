@@ -11,7 +11,7 @@ const reqRouteUrl = "http://saza.kohga.local:3001/reqRoute"
 
 const ExistsRoutePage = () => {
     const { setPage } = useContext(PageStateContext);
-    const { setPoly } = useContext(LocationPointContext);
+    const { setPoint, setPoly } = useContext(LocationPointContext);
     const [routeName, setRouteName] = useState<string[]>([]);
     const [select, setSelect] = useState('');
     const [single, setSingle] = useState('');
@@ -36,7 +36,8 @@ const ExistsRoutePage = () => {
         await axios.post(reqRouteUrl, postdata)
             .then((res) => {
                 console.log('reqroute', res.data);
-                setPoly(res.data.route)
+                setPoly(res.data.route);
+                setPoint(res.data.dest);
             })
             .catch((e) => console.log(e))
     }
