@@ -21,13 +21,6 @@ const ClickMarker = () => {
                 return newValue
             });
         },
-        contextmenu(e) {
-            for (const elem of point) {
-                if (elem === e.latlng) {
-                    alert('おんなじ')
-                }
-            }
-        }
     })
     return (
         <React.Fragment>
