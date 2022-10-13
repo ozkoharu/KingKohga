@@ -21,6 +21,7 @@ const ClickMarker = () => {
                 return newValue
             });
         }
+
     })
     return (
         <React.Fragment>
@@ -28,16 +29,28 @@ const ClickMarker = () => {
         </React.Fragment>
     )
 }
+const RightClick = () => {
+    const { point, setPoint } = useContext(LocationPointContext);
+    useMapEvents({
+        contextmenu() {
+            alert('右クリック');
+        }
+    });
+    return (
+        <></>
+    )
+}
 
 const BaseMap = () => {
 
     return (
-        <MapContainer center={position} zoom={zoomlebel} scrollWheelZoom={false}>
+        <MapContainer center={position} zoom={zoomlebel} scrollWheelZoom={false} doubleClickZoom={false}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <ClickMarker />
+            <RightClick />
         </MapContainer>
     )
 }
