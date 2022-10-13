@@ -32,8 +32,8 @@ const ClickMarker = () => {
 const RightClick = () => {
     const { point, setPoint } = useContext(LocationPointContext);
     useMapEvents({
-        contextmenu() {
-            alert('右クリック');
+        contextmenu(e) {
+            alert('右クリック' + e.latlng);
         }
     });
     return (
