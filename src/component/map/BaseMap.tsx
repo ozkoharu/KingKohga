@@ -43,10 +43,12 @@ const RightClick = () => {
             for (const elem of point) {
                 if (elem === e.latlng) {
                     count += 1;
+                    console.log(elem);
                 }
             }
             if (count === 0) {
-                alert('同じ値はありません');
+                alert('同じ値はありません')
+                console.log(e.latlng);
             } else {
                 alert('同じあたいが' + count + 'こありました')
             }
