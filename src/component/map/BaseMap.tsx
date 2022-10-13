@@ -39,12 +39,16 @@ const RightClick = () => {
     const { point, setPoint } = useContext(LocationPointContext);
     useMapEvents({
         contextmenu(e) {
+            let count = 0;
             for (const elem of point) {
                 if (elem === e.latlng) {
-                    alert('おんなじ')
-                } else {
-                    alert('違うよ')
+                    count += 1;
                 }
+            }
+            if (count === 0) {
+                alert('同じ値はありません');
+            } else {
+                alert('同じあたいが' + count + 'こありました')
             }
         }
     });
