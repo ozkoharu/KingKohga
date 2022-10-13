@@ -20,8 +20,14 @@ const ClickMarker = () => {
                 const newValue = [...prevValue, e.latlng]
                 return newValue
             });
+        },
+        contextmenu(e) {
+            for (const elem of point) {
+                if (elem === e.latlng) {
+                    alert('おんなじ')
+                }
+            }
         }
-
     })
     return (
         <React.Fragment>
@@ -33,7 +39,13 @@ const RightClick = () => {
     const { point, setPoint } = useContext(LocationPointContext);
     useMapEvents({
         contextmenu(e) {
-            alert('右クリック' + e.latlng);
+            for (const elem of point) {
+                if (elem === e.latlng) {
+                    alert('おんなじ')
+                } else {
+                    alert('違うよ')
+                }
+            }
         }
     });
     return (
