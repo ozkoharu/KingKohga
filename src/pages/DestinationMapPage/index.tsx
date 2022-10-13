@@ -16,6 +16,7 @@ const DynamicMap = dynamic(() => {
     { ssr: false }
 )
 const PostDummyUrl = 'http://saza.kohga.local:3000/route/Astar'
+const tktmdummy = 'http://tktm.kohga.local:3000/api/Astar'
 
 const DestinationMapPage = () => {
     const { setPage } = useContext(PageStateContext);
@@ -43,7 +44,7 @@ const DestinationMapPage = () => {
         //ここにaxiosの処理
         setPageLoading(true);
         console.log("PostData", PostData);
-        await axios.post(PostDummyUrl, PostData)
+        await axios.post(tktmdummy, PostData)
             .then((res) => {
                 console.log('type', res.data.type);
                 console.log(res.data.data);
