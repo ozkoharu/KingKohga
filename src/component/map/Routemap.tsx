@@ -1,11 +1,15 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext } from "react"
 import { MapContainer, Marker, Polyline, TileLayer, useMapEvents } from "react-leaflet"
 import { LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css"
 import { LocationPointContext } from "../../pages";
 //Marker壊れたとき用
-import L from "leaflet"
+import * as L from "leaflet";
 L.Icon.Default.imagePath = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/'
+
+let greenIcon = new L.Icon({
+    iconUrl: "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|abcdef&chf=a,s,ee00FFFF"
+})
 
 
 const position = new LatLng(38.72311671577611, 141.0346841825174);
@@ -40,10 +44,11 @@ const ClickMarker = () => {
                 riseOnHover={true}
                 eventHandlers={{
                     contextmenu: (e) => {
-                        alert('この目的地を削除します');
-                        let index = point.indexOf(e.latlng);
-                        point.splice(index, 1);
-                        setPoly([[]]);
+                        if (confirm('この目的地を削除します')) {
+                            let index = point.indexOf(e.latlng);
+                            point.splice(index, 1);
+                            setPoly([[]]);
+                        }
                     }
                 }}
             ></Marker>)}
