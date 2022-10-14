@@ -15,12 +15,12 @@ const CarMenuPage = () => {
         console.log('userId', userId);
 
         const postdata = { "userId": userId };
-
+        OnClickSetState(2, setPage) //DEBUG
         await axios.post(Url, postdata)
             .then((res) => {
                 console.log(res.data);
                 if (res.data.succeeded === true) {
-                    OnClickSetState(2, setPage)
+                    //OnClickSetState(2, setPage)
                 } else {
                     alert('車が見つかりませんでした。時間を空けてもう一度お試しください')
                 }

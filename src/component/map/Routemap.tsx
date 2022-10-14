@@ -23,7 +23,7 @@ const LinePoly = () => {
 
 const ClickMarker = () => {
 
-    const { point, setPoint } = useContext(LocationPointContext);
+    const { point, setPoint, setPoly } = useContext(LocationPointContext);
     useMapEvents({
         click(e) {
             setPoint((prevValue) => {
@@ -34,7 +34,19 @@ const ClickMarker = () => {
     })
     return (
         <React.Fragment>
-            {point.map((point, index) => <Marker position={point} key={index}></Marker>)}
+            {point.map((pos, index) => <Marker
+                position={pos}
+                key={index}
+                riseOnHover={true}
+                eventHandlers={{
+                    contextmenu: (e) => {
+                        alert('この目的地を削除します');
+                        let index = point.indexOf(e.latlng);
+                        point.splice(index, 1);
+                        setPoly([[]]);
+                    }
+                }}
+            ></Marker>)}
         </React.Fragment>
     )
 }
