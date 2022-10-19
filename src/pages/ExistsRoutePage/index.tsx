@@ -42,15 +42,24 @@ const ExistsRoutePage = () => {
             .catch((e) => console.log(e))
     }
 
+    const goRoute = () => {
+        OnClickSetState(4, setPage)
+    }
+    const backCarMenu = () => {
+        setPoly([[]]);
+        setPoint([]);
+        OnClickSetState(1, setPage)
+    }
+
     return (
         <>
             <BaseHeader>
                 <div className="buttomflex">
-                    <BaseButton onClick={() => OnClickSetState(1, setPage)} _className="buttom">
+                    <BaseButton onClick={backCarMenu} _className="buttom">
                         車メニューに戻る
                     </BaseButton>
 
-                    <BaseButton onClick={() => OnClickSetState(4, setPage)} _className="buttom">
+                    <BaseButton onClick={goRoute} _className="buttom">
                         この経路に行く
                     </BaseButton>
                     <div>
