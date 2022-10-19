@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react"
 import { MapContainer, TileLayer, useMapEvents, Circle } from "react-leaflet"
-import { LatLng } from "leaflet";
+import { LatLng, point } from "leaflet";
 import "leaflet/dist/leaflet.css"
-import { CircleContext, LatLngRadius } from "../../pages";
+import { CircleContext, LatLngRadius, LocationPointContext } from "../../pages";
 //Marker壊れたとき用
 import L from "leaflet"
 L.Icon.Default.imagePath = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/'
@@ -15,7 +15,7 @@ const zoomlebel = 18;
 const hoge: LatLngRadius[] = [];
 const CircleMarker = () => {
     const { circle, setCircle, radius, setRadius } = useContext(CircleContext);
-
+    const { setPoly } = useContext(LocationPointContext);
 
     useMapEvents({
         click(e) {
@@ -35,6 +35,15 @@ const CircleMarker = () => {
                     radius={e.r}
                     key={index}
                     stroke={false}
+                    eventHandlers={{
+                        contextmenu: (e) => {
+                            if (confirm('この領域を削除しますか?')) {
+                                let index = circle.indexOf({ pos: e.latlng, r: radius });
+                                circle.splice(index, 1);
+                                setPoly([[]]);
+                            }
+                        }
+                    }}
                 />
             )}
         </React.Fragment>

@@ -17,6 +17,11 @@ const DynamicMap = dynamic(() => {
 const PathOK = () => {
     const { page, setPage } = useContext(PageStateContext);
     const { radius, setRadius } = useContext(CircleContext);
+
+    const pathAreaOK = () => {
+        console.log('pathAreaOK');
+    }
+
     return (
         <>
             <BaseHeader>
@@ -26,6 +31,9 @@ const PathOK = () => {
                     </BaseButton>
                     <label htmlFor="sel">半径を入力</label>
                     <input type="number" onChange={(e) => setRadius(e.target.valueAsNumber)} name="sel" id="sel" value={radius} />
+                    <BaseButton onClick={pathAreaOK} _className="buttom">
+                        通行可能領域を設定する
+                    </BaseButton>
                 </div>
             </BaseHeader>
             <div className="gakubuti">
