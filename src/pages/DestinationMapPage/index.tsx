@@ -50,9 +50,9 @@ const DestinationMapPage = () => {
             .then((res) => {
                 console.log('res', res.data);
                 console.log('type', res.data.type);
-                console.log(res.data.data);
+                console.log(res.data.route);
                 setPageLoading(false);
-                temp = res.data.data;
+                temp = res.data.route;
                 setPoly(temp);
             })
             .catch(e => {
