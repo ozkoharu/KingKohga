@@ -17,6 +17,7 @@ export const DynamicRouteMap = dynamic(() => {
 )
 const tktmdummy = 'http://tktm.kohga.local:3000/api/Astar'
 
+
 const AddRoutePage = () => {
     const { page, setPage } = useContext(PageStateContext);
     const { point, setPoint, poly, setPoly } = useContext(LocationPointContext);
@@ -46,6 +47,7 @@ const AddRoutePage = () => {
         "junkai": junkai,
         "data": point
     }
+
     let temp: LatLng[][] = [[]];
     const onClickRouteSearch = async () => {
         //ここにaxiosの処理
@@ -68,6 +70,9 @@ const AddRoutePage = () => {
                 console.log('complete', poly);
             })
     }
+
+
+
     return (
         <>
             <div className="container map add-route">
