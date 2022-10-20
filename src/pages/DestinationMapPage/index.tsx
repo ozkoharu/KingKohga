@@ -9,6 +9,7 @@ import axios from "axios";
 import { LatLng } from "leaflet";
 import { LoadingContext } from "../_app";
 import { BaseFooter } from "../../component/template/Footer/BaseFooter";
+import e from "express";
 
 
 const DynamicMap = dynamic(() => {
@@ -47,6 +48,7 @@ const DestinationMapPage = () => {
         console.log("PostData", PostData);
         await axios.post(PostDummyUrl, PostData)
             .then((res) => {
+                console.log('res', res.data);
                 console.log('type', res.data.type);
                 console.log(res.data.data);
                 setPageLoading(false);
