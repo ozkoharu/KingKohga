@@ -9,7 +9,7 @@ import axios from "axios";
 import { LatLng } from "leaflet";
 import { LoadingContext } from "../_app";
 import { BaseFooter } from "../../component/template/Footer/BaseFooter";
-import e from "express";
+
 
 
 const DynamicMap = dynamic(() => {
