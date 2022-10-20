@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import { LocationPointContext, PageStateContext, UserIdContext } from "..";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
+import { BaseFooter } from "../../component/template/Footer/BaseFooter";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
 import { DynamicRouteMap } from "../AddRoutePage";
 
@@ -30,18 +31,19 @@ const CarWatchPage = () => {
     }
     return (
         <>
-            <BaseHeader>
-                <div className="flexbottom">
-                    <BaseButton onClick={onClickMenu} _className="buttom">
+            <div className="container map car-watch">
+                <BaseHeader>
+                    <BaseButton onClick={onClickMenu} _className="button">
                         車メニューに戻る
                     </BaseButton>
-                    <BaseButton onClick={onClickNext} _className="buttom">
+                    <BaseButton onClick={onClickNext} _className="button">
                         次の目的地に行く
                     </BaseButton>
-                </div>
-            </BaseHeader>
-            <div className="gakubuti">
-                <DynamicRouteMap />
+                </BaseHeader>
+                <main>
+                    <DynamicRouteMap />
+                </main>
+                <BaseFooter />
             </div>
         </>
     )

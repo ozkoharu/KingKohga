@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { createContext, useState } from 'react';
 import { PageLoading } from '../component/hooks/pageLoading';
+import '../styles/WelcomePage.css'
 
 export const LoadingContext = createContext({} as {
   pageLoading: boolean,

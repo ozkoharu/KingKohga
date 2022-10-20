@@ -6,6 +6,7 @@ import { LocationPointContext, PageStateContext } from "..";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { BaseCheckBox } from "../../component/atoms/checkbox/BaseCheckBox";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
+import { BaseFooter } from "../../component/template/Footer/BaseFooter";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
 import { LoadingContext } from "../_app";
 
@@ -69,30 +70,31 @@ const AddRoutePage = () => {
     }
     return (
         <>
-            <BaseHeader>
-                <div className="bottomflex">
-                    <div className="bottomflex">
-                        <BaseCheckBox onChange={onClickJunkai} >
-                            巡回ルート
-                        </BaseCheckBox>
+            <div className="container map add-route">
+                <BaseHeader>
+                    <BaseCheckBox onChange={onClickJunkai} >
+                        <span className="check">巡回ルート</span>
+                    </BaseCheckBox>
 
-                        <label htmlFor="input">経路名</label>
-                        <input type="text" onChange={(e) => setInput(e.target.value)} name="input" id="input" value={input} />
+                    <label htmlFor="input" id="input">経路名</label>
+                    <input type="text" onChange={(e) => setInput(e.target.value)} name="input" id="input" value={input} />
 
-                        <BaseButton onClick={routeCheck} _className="buttom">
-                            経路確定
-                        </BaseButton>
-                        <BaseButton onClick={onClickBack} _className="buttom">
-                            戻る
-                        </BaseButton>
-                        <BaseButton onClick={onClickRouteSearch} _className="buttom">
-                            経路探索
-                        </BaseButton>
-                    </div>
-                </div>
-            </BaseHeader>
-            <div className="gakubuti">
-                <DynamicRouteMap />
+                    <BaseButton onClick={routeCheck} _className="button">
+                        確定
+                    </BaseButton>
+                    <BaseButton onClick={onClickBack} _className="button">
+                        戻る
+                    </BaseButton>
+                    <BaseButton onClick={onClickRouteSearch} _className="button">
+                        経路探索
+                    </BaseButton>
+
+                </BaseHeader>
+                <main>
+                    <DynamicRouteMap />
+                </main>
+                <BaseFooter />
+
             </div>
         </>
     )

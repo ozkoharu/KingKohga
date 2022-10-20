@@ -53,36 +53,38 @@ const ExistsRoutePage = () => {
 
     return (
         <>
-            <BaseHeader>
-                <div className="buttomflex">
-                    <BaseButton onClick={backCarMenu} _className="buttom">
+            <div className="container map exist-route">
+                <BaseHeader>
+
+                    <BaseButton onClick={backCarMenu} _className="button">
                         車メニューに戻る
                     </BaseButton>
 
-                    <BaseButton onClick={goRoute} _className="buttom">
+                    <BaseButton onClick={goRoute} _className="button">
                         この経路に行く
                     </BaseButton>
-                    <div>
-                        <select id="sel" name="sel"
-                            onChange={(e) => {
-                                setSelect(e.target.value)
-                                setSingle(e.target.value)
-                                console.log('e.target.value', e.target.value)
-                            }}>
-                            <option value={""} disabled selected hidden >ルートを選んでください</option>
-                            {routeName ?
-                                routeName.map((route, key) => <option value={route} key={key}>{route}</option>)
-                                : null
-                            }
-                        </select>
-                    </div>
-                    <BaseButton onClick={() => reqRoute(single)} _className="buttom">
+
+                    <select id="sel" name="sel"
+                        onChange={(e) => {
+                            setSelect(e.target.value)
+                            setSingle(e.target.value)
+                            console.log('e.target.value', e.target.value)
+                        }}>
+                        <option value={""} disabled selected hidden >ルートを選んでください</option>
+                        {routeName ?
+                            routeName.map((route, key) => <option value={route} key={key}>{route}</option>)
+                            : null
+                        }
+                    </select>
+
+                    <BaseButton onClick={() => reqRoute(single)} _className="button">
                         経路表示
                     </BaseButton>
-                </div>
-            </BaseHeader>
-            <div className="gakubuti">
-                <DynamicRouteMap />
+
+                </BaseHeader >
+                <main>
+                    <DynamicRouteMap />
+                </main>
             </div>
         </>
     )

@@ -8,6 +8,7 @@ import { LocationPointContext, PageStateContext } from "..";
 import axios from "axios";
 import { LatLng } from "leaflet";
 import { LoadingContext } from "../_app";
+import { BaseFooter } from "../../component/template/Footer/BaseFooter";
 
 
 const DynamicMap = dynamic(() => {
@@ -63,24 +64,27 @@ const DestinationMapPage = () => {
     }
     return (
         <>
+            <div className="container map dest-map">
+                <BaseHeader>
 
-            <BaseHeader>
-                <div className="bottomflex">
                     <BaseCheckBox onChange={onClickJunkai} >
-                        巡回ルート
+                        <span className="check">
+                            巡回ルート
+                        </span>
                     </BaseCheckBox>
-                    <BaseButton onClick={onClickRouteSearch} _className="buttom">
+                    <BaseButton onClick={onClickRouteSearch} _className="button">
                         経路探索
                     </BaseButton>
-                    <BaseButton onClick={onClickBack} _className="buttom">
+                    <BaseButton onClick={onClickBack} _className="button">
                         戻る
                     </BaseButton>
-                </div>
 
-            </BaseHeader>
-            <div className="gakubuti">
+                </BaseHeader>
 
-                <DynamicMap />
+                <main>
+                    <DynamicMap />
+                </main>
+                <BaseFooter />
             </div>
         </>
     )
