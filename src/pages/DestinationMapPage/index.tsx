@@ -11,13 +11,12 @@ import { LoadingContext } from "../_app";
 import { BaseFooter } from "../../component/template/Footer/BaseFooter";
 
 
-
+const PostDummyUrl = 'http://saza.kohga.local:3001/astar';
 const DynamicMap = dynamic(() => {
     return import('../../component/map/BaseMap')
 },
     { ssr: false }
 )
-const PostDummyUrl = 'http://saza.kohga.local:3001/astar';
 
 
 const DestinationMapPage = () => {
@@ -27,6 +26,12 @@ const DestinationMapPage = () => {
     const { setPageLoading } = useContext(LoadingContext);
 
 
+    const PostData = {
+        "type": "watanabe",
+        "junkai": junkai,
+        "data": point
+    }
+
     const onClickBack = () => {
         setPoint([]);
         setPoly([[]]);
@@ -34,14 +39,9 @@ const DestinationMapPage = () => {
     }
 
     const onClickJunkai = () => {
-
         setJunkai(!junkai);
     }
-    const PostData = {
-        "type": "watanabe",
-        "junkai": junkai,
-        "data": point
-    }
+
     let temp: LatLng[][] = [[]];
     const onClickRouteSearch = async () => {
         //ここにaxiosの処理
@@ -69,7 +69,6 @@ const DestinationMapPage = () => {
         <>
             <div className="container map dest-map">
                 <BaseHeader>
-
                     <BaseCheckBox onChange={onClickJunkai} >
                         <span className="check">
                             巡回ルート
@@ -81,9 +80,7 @@ const DestinationMapPage = () => {
                     <BaseButton onClick={onClickBack} _className="button">
                         戻る
                     </BaseButton>
-
                 </BaseHeader>
-
                 <main>
                     <DynamicMap />
                 </main>
@@ -92,4 +89,4 @@ const DestinationMapPage = () => {
         </>
     )
 }
-export default DestinationMapPage
+export default DestinationMapPage;
