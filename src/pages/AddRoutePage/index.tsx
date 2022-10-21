@@ -15,7 +15,8 @@ export const DynamicRouteMap = dynamic(() => {
 },
     { ssr: false }
 )
-const tktmdummy = 'http://tktm.kohga.local:3000/api/Astar'
+const tktmdummy = 'http://tktm.kohga.local:3000/api/Astar';
+const PostDummyUrl = 'http://saza.kohga.local:3001/astar';
 
 
 const AddRoutePage = () => {
@@ -53,12 +54,12 @@ const AddRoutePage = () => {
         //ここにaxiosの処理
         setPageLoading(true);
         console.log("PostData", PostData);
-        await axios.post(tktmdummy, PostData)
+        await axios.post(PostDummyUrl, PostData)
             .then((res) => {
                 console.log('type', res.data.type);
-                console.log(res.data.data);
+                console.log(res.data.route);
                 setPageLoading(false);
-                temp = res.data.data;
+                temp = res.data.route;
                 setPoly(temp);
             })
             .catch(e => {
