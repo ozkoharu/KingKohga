@@ -11,6 +11,7 @@
 
 /*================================================ コンテナ ================================================*/
 .welcome {
+    position: fixed;
     display: grid;
     /* グリッドレイアウトを使用 */
     gap: var(--grid-gap);
@@ -19,7 +20,7 @@
     margin: 0 auto;
     /* コンテナ外の余白 */
 
-    grid-template-rows: 6vh auto 4vh;
+    grid-template-rows: 6vh calc(90vh - (var(--grid-gap)*2)) 4vh;
     /* 行の大きさ */
     grid-template-columns: 15vw calc(70vw - (var(--grid-gap)*2)) 15vw;
     /* 列の大きさ */
