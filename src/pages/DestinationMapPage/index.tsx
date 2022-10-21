@@ -18,13 +18,48 @@ const DynamicMap = dynamic(() => {
     { ssr: false }
 )
 
+interface Props {
+    closeHandler: () => void
+}
+const Modal: React.FC<Props> = ({
+    closeHandler,
+}) => {
+    return (
+        <>
+            <div id="modal" className='modal' onClick={(event) => { event.stopPropagation() }}>
+                <div>
+                    <p>モーダル</p>
+                    <button onClick={closeHandler}>閉じるボタン</button>
+                </div>
+            </div>
+        </>
+    )
+}
+
 
 const DestinationMapPage = () => {
     const { setPage } = useContext(PageStateContext);
     const { point, poly, setPoly, setPoint } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
     const { setPageLoading } = useContext(LoadingContext);
+    const [isModalOpen, setIsModalOpen] = useState(true);
 
+    const closeModal = useCallback(() => {
+        setIsModalOpen(false);
+        document.removeEventListener('click', closeModal);
+    }, [])
+
+    useEffect(() => {
+        return () => {
+            document.removeEventListener('click', closeModal);
+        }
+    }, [closeModal])
+
+    const openModal = (event: React.MouseEvent) => {
+        setIsModalOpen(true);
+        document.addEventListener('click', closeModal)
+        event.stopPropagation()
+    }
 
     const PostData = {
         "type": "watanabe",
@@ -80,10 +115,13 @@ const DestinationMapPage = () => {
                     <BaseButton onClick={onClickBack} _className="button">
                         戻る
                     </BaseButton>
+                    <button className="button" onClick={(event) => { openModal(event) }}>チュートリアルを開く</button>
                 </BaseHeader>
-                <main>
-                    <DynamicMap />
-                </main>
+                {
+                    isModalOpen ? <Modal closeHandler={() => { closeModal() }} /> : <></>
+                }
+                <DynamicMap />
+
                 <BaseFooter />
             </div>
         </>
