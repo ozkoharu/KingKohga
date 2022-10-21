@@ -11,8 +11,8 @@ export const BaseCheckBox: React.FC<Props> = ({
 }) => {
     return (
         <>
-            <label htmlFor="check1">{children}</label>
             <input type={"checkbox"} onChange={onChange} id="check1" />
+            <label htmlFor="check1">{children}</label>
         </>
     )
 
