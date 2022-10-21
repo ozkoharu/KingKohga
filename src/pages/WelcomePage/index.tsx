@@ -40,14 +40,14 @@ const WelcomePage = () => {
                 <main>
                     <ul>
                         <li>
-                            <h1>車の利用</h1>
+                            <h2>車の利用</h2>
                             <p>車との通信を行います</p>
                             <BaseButton onClick={onClickCaruse} _className="button">
                                 車を使う
                             </BaseButton>
                         </li>
                         <li>
-                            <h1>管理画面</h1>
+                            <h2>管理画面</h2>
                             <p>車の管理を行います</p>
                             <BaseButton onClick={() => OnClickSetState(7, setPage)} _className="button">
                                 車管理マネージャ
