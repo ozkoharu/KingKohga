@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { BaseCheckBox } from "../../component/atoms/checkbox/BaseCheckBox";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
@@ -25,6 +25,7 @@ const DestinationMapPage = () => {
     const { point, poly, setPoly, setPoint } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
     const { setPageLoading } = useContext(LoadingContext);
+
 
     const onClickBack = () => {
         setPoint([]);
