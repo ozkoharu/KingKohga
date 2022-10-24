@@ -29,6 +29,11 @@ const CarWatchPage = () => {
             })
             .catch((e) => console.log(e));
     }
+
+    const onClickCarStop = () => {
+        console.log('Car stop');
+    }
+
     return (
         <>
             <div className="container map car-watch">
@@ -38,6 +43,9 @@ const CarWatchPage = () => {
                     </BaseButton>
                     <BaseButton onClick={onClickNext} _className="button">
                         次の目的地に行く
+                    </BaseButton>
+                    <BaseButton onClick={onClickCarStop} _className="button">
+                        車を停止
                     </BaseButton>
                 </BaseHeader>
                 <main>
