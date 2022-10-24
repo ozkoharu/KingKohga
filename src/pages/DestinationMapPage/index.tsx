@@ -26,10 +26,12 @@ const Modal: React.FC<Props> = ({
 }) => {
     return (
         <>
-            <div id="modal" className='modal' onClick={(event) => { event.stopPropagation() }}>
-                <div>
+            <div className='modalContainer' onClick={closeHandler}>
+                <div className="modalBody">
                     <p>モーダル</p>
-                    <button onClick={closeHandler}>閉じるボタン</button>
+                    <div className="modalButtons">
+                        <button onClick={closeHandler}>閉じるボタン</button>
+                    </div>
                 </div>
             </div>
         </>
@@ -46,7 +48,6 @@ const DestinationMapPage = () => {
 
     const closeModal = useCallback(() => {
         setIsModalOpen(false);
-        document.removeEventListener('click', closeModal);
     }, [])
 
     useEffect(() => {
@@ -117,11 +118,11 @@ const DestinationMapPage = () => {
                     </BaseButton>
                     <button className="button" onClick={(event) => { openModal(event) }}>チュートリアルを開く</button>
                 </BaseHeader>
-                {
-                    isModalOpen ? <Modal closeHandler={() => { closeModal() }} /> : <></>
-                }
-                <DynamicMap />
 
+                <DynamicMap />
+                {
+                    isModalOpen ? <Modal closeHandler={closeModal} /> : <></>
+                }
                 <BaseFooter />
             </div>
         </>
