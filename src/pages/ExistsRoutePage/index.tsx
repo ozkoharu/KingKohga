@@ -38,8 +38,8 @@ const ExistsRoutePage = () => {
         await axios.post(reqRouteUrl, postdata)
             .then((res) => {
                 console.log('reqroute', res.data);
-                //setPoly(res.data.route);
-                //setPoint(res.data.dest);
+                setPoly(res.data.route);
+                setPoint(res.data.dest);
             })
             .catch((e) => console.log(e))
     }

@@ -51,6 +51,31 @@ const RouteMap = () => {
             </React.Fragment>
         )
     }
+    const MultiPoly = () => {
+        return (
+            <React.Fragment>
+                {
+                    poly.map((elem, index) =>
+                        <Polyline
+                            weight={20}
+                            pathOptions={greenOptions}
+                            positions={elem}
+                            key={index}
+                            eventHandlers={{
+                                contextmenu: (e) => {
+                                    if (confirm('これが新しい線です')) {
+                                        setPointFlag(true);
+                                        console.log('e.target', e.target._latlngs);
+                                    } else {
+                                        setPointFlag(false);
+                                    }
+                                },
+                            }}>
+                        </Polyline>)
+                }
+            </React.Fragment>
+        )
+    }
     return (
         <MapContainer center={position} zoom={zoomlebel} scrollWheelZoom={false}>
             <TileLayer
@@ -58,6 +83,7 @@ const RouteMap = () => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <ClickMarker />
+            <MultiPoly />
         </MapContainer>
     )
 }
