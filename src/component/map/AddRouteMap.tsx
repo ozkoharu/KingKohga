@@ -22,33 +22,28 @@ const greenOptions = {
 const RouteMap = () => {
     const { poly, point, setPoint, setPoly } = useContext(LocationPointContext);
     const [pointFlag, setPointFlag] = useState<boolean>(false);
-
-    const ClickMarker = () => {
-        useMapEvents({
-            click(e) {
-                setPoint((prevValue) => {
-                    const newValue = [...prevValue, e.latlng]
-                    return newValue
-                });
-            },
-
-        })
+    const MultiPoly = () => {
         return (
             <React.Fragment>
-                {point.map((pos, index) => <Marker
-                    position={pos}
-                    key={index}
-                    riseOnHover={true}
-                    eventHandlers={{
-                        contextmenu: (e) => {
-                            if (confirm('この目的地を削除します')) {
-                                let index = point.indexOf(e.latlng);
-                                point.splice(index, 1);
-                                setPoly([[]]);
-                            }
-                        }
-                    }}
-                ></Marker>)}
+                {
+                    poly.map((elem, index) =>
+                        <Polyline
+                            weight={20}
+                            pathOptions={greenOptions}
+                            positions={elem}
+                            key={index}
+                            eventHandlers={{
+                                contextmenu: (e) => {
+                                    if (confirm('これが新しい線です')) {
+                                        setPointFlag(true);
+                                        console.log('e.target', e.target._latlngs);
+                                    } else {
+                                        setPointFlag(false);
+                                    }
+                                },
+                            }}>
+                        </Polyline>)
+                }
             </React.Fragment>
         )
     }
@@ -58,7 +53,7 @@ const RouteMap = () => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <ClickMarker />
+            <MultiPoly />
         </MapContainer>
     )
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { LocationPointContext, PageStateContext } from "..";
+import { LocationPointContext, PageStateContext, UserIdContext } from "..";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
 import { DynamicRouteMap } from "../AddRoutePage";
@@ -12,32 +12,34 @@ const reqRouteUrl = "http://saza.kohga.local:3001/reqRoute"
 const ExistsRoutePage = () => {
     const { setPage } = useContext(PageStateContext);
     const { setPoint, setPoly } = useContext(LocationPointContext);
+    const { userId, setUserId } = useContext(UserIdContext);
     const [routeName, setRouteName] = useState<string[]>([]);
     const [select, setSelect] = useState('');
     const [single, setSingle] = useState('');
 
-    useEffect(() => {
-        axios.get(RouteNameUrl)
-            .then((res) => {
-                console.log('res.data.succeeded', res.data.succeeded);
-                console.log('res.data.routeName', res.data.routeName);
-                setRouteName(res.data.routeName);
+    const PostUserId = {
+        "userId": userId,
+    }
 
+    useEffect(() => {
+        axios.post(RouteNameUrl, PostUserId)
+            .then((res) => {
+                setRouteName(res.data.routeName);
             })
             .catch((e) => console.log(e))
     }, [])
 
 
     const reqRoute = async (routename: string) => {
-        const postdata = { "routeName": routename }
-        console.log('postdata', postdata);
-        console.log('single', single);
-        console.log('routeName', routeName);
+        const postdata = {
+            "userId": userId,
+            "routeName": routename
+        }
         await axios.post(reqRouteUrl, postdata)
             .then((res) => {
                 console.log('reqroute', res.data);
-                setPoly(res.data.route);
-                setPoint(res.data.dest);
+                //setPoly(res.data.route);
+                //setPoint(res.data.dest);
             })
             .catch((e) => console.log(e))
     }

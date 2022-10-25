@@ -34,7 +34,7 @@ const ClickMarker = () => {
     )
 }
 
-const BaseMap = () => {
+const DestinationMap = () => {
 
     return (
         <MapContainer center={position} zoom={zoomlebel} scrollWheelZoom={false} doubleClickZoom={false}>
@@ -46,4 +46,4 @@ const BaseMap = () => {
         </MapContainer>
     )
 }
-export default BaseMap;
+export default DestinationMap;

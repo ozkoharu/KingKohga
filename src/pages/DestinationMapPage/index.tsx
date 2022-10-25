@@ -4,7 +4,7 @@ import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { BaseCheckBox } from "../../component/atoms/checkbox/BaseCheckBox";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
-import { LocationPointContext, PageStateContext } from "..";
+import { LocationPointContext, PageStateContext, UserIdContext } from "..";
 import axios from "axios";
 import { LatLng } from "leaflet";
 import { LoadingContext } from "../_app";
@@ -13,7 +13,7 @@ import { BaseFooter } from "../../component/template/Footer/BaseFooter";
 
 const PostDummyUrl = 'http://saza.kohga.local:3001/astar';
 const DynamicMap = dynamic(() => {
-    return import('../../component/map/BaseMap')
+    return import('../../component/map/DestinationMap')
 },
     { ssr: false }
 )
@@ -42,6 +42,7 @@ const Modal: React.FC<Props> = ({
 const DestinationMapPage = () => {
     const { setPage } = useContext(PageStateContext);
     const { point, poly, setPoly, setPoint } = useContext(LocationPointContext);
+    const { userId, setUserId } = useContext(UserIdContext);
     const [junkai, setJunkai] = useState(false)
     const { setPageLoading } = useContext(LoadingContext);
     const [isModalOpen, setIsModalOpen] = useState(true);
@@ -63,7 +64,7 @@ const DestinationMapPage = () => {
     }
 
     const PostData = {
-        "type": "watanabe",
+        "userId": userId,
         "junkai": junkai,
         "data": point
     }
@@ -80,7 +81,8 @@ const DestinationMapPage = () => {
 
     let temp: LatLng[][] = [[]];
     const onClickRouteSearch = async () => {
-        //ここにaxiosの処理
+
+        console.log('point', point);
         setPageLoading(true);
         console.log("PostData", PostData);
         await axios.post(PostDummyUrl, PostData)

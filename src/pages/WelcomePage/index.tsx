@@ -13,14 +13,14 @@ const WelcomePage = () => {
     const { userId, setUserId } = useContext(UserIdContext);
 
     const onClickCaruse = async () => {
-        OnClickSetState(1, setPage) //DEBUG
+        //OnClickSetState(1, setPage) //DEBUG
         await axios.get(Url)
             .then((res) => {
 
                 if (res.data.succeeded === true) {
                     setUserId(res.data.userId);
                     console.log(setUserId);
-                    //OnClickSetState(1, setPage);
+                    OnClickSetState(1, setPage);
                 } else {
                     alert('車が空いていません。少し待っててね')
                     setUserId('');
