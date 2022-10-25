@@ -16,6 +16,10 @@ export const LocationPointContext = createContext({} as {
   setPoint: React.Dispatch<React.SetStateAction<LatLng[]>>
   poly: LatLng[][]
   setPoly: React.Dispatch<React.SetStateAction<LatLng[][]>>
+  middle: LatLng[]
+  setMiddle: React.Dispatch<React.SetStateAction<LatLng[]>>
+  temp: LatLng[],
+  setTemp: React.Dispatch<React.SetStateAction<LatLng[]>>
 });
 
 export const CircleContext = createContext({} as {
@@ -38,6 +42,8 @@ export const PageStateContext = createContext({} as {
 
 const Home: NextPage = () => {
   const [point, setPoint] = useState<LatLng[]>([]);
+  const [middle, setMiddle] = useState<LatLng[]>([]);
+  const [temp, setTemp] = useState<LatLng[]>([]);
   const [poly, setPoly] = useState<LatLng[][]>([[]]);
   const [page, setPage] = useState<number>(0);
   const [radius, setRadius] = useState<number>(0);
@@ -47,7 +53,7 @@ const Home: NextPage = () => {
   useEffect(() => window.addEventListener('popstate', () => setPage(Urltonumber(window.location.pathname))), [])
   return (
     <>
-      <LocationPointContext.Provider value={{ point, setPoint, poly, setPoly }}>
+      <LocationPointContext.Provider value={{ point, setPoint, poly, setPoly, middle, setMiddle, temp, setTemp }}>
         <PageStateContext.Provider value={{ page, setPage }}>
           <CircleContext.Provider value={{ circle, setCircle, radius, setRadius }}>
             <UserIdContext.Provider value={{ userId, setUserId }}>

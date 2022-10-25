@@ -19,7 +19,7 @@ const greenOptions = {
 
 
 const RouteMap = () => {
-    const { poly, point, setPoint, setPoly } = useContext(LocationPointContext);
+    const { poly, point, setPoint, setPoly, middle, setMiddle, temp, setTemp } = useContext(LocationPointContext);
     const [pointFlag, setPointFlag] = useState<boolean>(false);
 
     const ClickMarker = () => {
@@ -34,20 +34,53 @@ const RouteMap = () => {
         })
         return (
             <React.Fragment>
-                {point.map((pos, index) => <Marker
-                    position={pos}
-                    key={index}
-                    riseOnHover={true}
-                    eventHandlers={{
-                        contextmenu: (e) => {
-                            if (confirm('この目的地を削除します')) {
-                                let index = point.indexOf(e.latlng);
-                                point.splice(index, 1);
-                                setPoly([[]]);
+                {
+                    point.map((pos, index) => <Marker
+                        position={pos}
+                        key={index}
+                        riseOnHover={true}
+                        eventHandlers={{
+                            contextmenu: (e) => {
+                                if (confirm('この目的地を削除します')) {
+                                    let index = point.indexOf(e.latlng);
+                                    point.splice(index, 1);
+                                    setPoly([[]]);
+                                }
                             }
-                        }
-                    }}
-                ></Marker>)}
+                        }}
+                    ></Marker>)
+                }
+            </React.Fragment>
+        )
+    }
+    const MiddleClickMarker = () => {
+        useMapEvents({
+            click(e) {
+                setMiddle((prevValue) => {
+                    const newValue = [...prevValue, e.latlng];
+                    return newValue;
+                });
+
+            }
+        })
+
+        return (
+            <React.Fragment>
+                {
+                    middle.map((pos, index) => <Marker
+                        position={pos}
+                        key={index}
+                        riseOnHover={true}
+                        eventHandlers={{
+                            contextmenu: (e) => {
+                                if (confirm('この目的地を削除します')) {
+                                    let index = middle.indexOf(e.latlng);
+                                    middle.splice(index, 1);
+                                    setPoly([[]]);
+                                }
+                            }
+                        }}></Marker>)
+                }
             </React.Fragment>
         )
     }
@@ -65,7 +98,8 @@ const RouteMap = () => {
                                 contextmenu: (e) => {
                                     if (confirm('これが新しい線です')) {
                                         setPointFlag(true);
-                                        console.log('e.target', e.target._latlngs);
+                                        console.log('e.target', e.target._latlngs[0]);
+                                        setTemp(e.target._latlngs);
                                     } else {
                                         setPointFlag(false);
                                     }
@@ -83,6 +117,9 @@ const RouteMap = () => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <ClickMarker />
+            {
+                pointFlag ? <MiddleClickMarker /> : <></>
+            }
             <MultiPoly />
         </MapContainer>
     )

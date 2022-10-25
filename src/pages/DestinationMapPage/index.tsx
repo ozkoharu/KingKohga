@@ -41,7 +41,7 @@ const Modal: React.FC<Props> = ({
 
 const DestinationMapPage = () => {
     const { setPage } = useContext(PageStateContext);
-    const { point, poly, setPoly, setPoint } = useContext(LocationPointContext);
+    const { point, poly, setPoly, setPoint, middle, setMiddle, setTemp, temp } = useContext(LocationPointContext);
     const { userId, setUserId } = useContext(UserIdContext);
     const [junkai, setJunkai] = useState(false)
     const { setPageLoading } = useContext(LoadingContext);
@@ -79,7 +79,7 @@ const DestinationMapPage = () => {
         setJunkai(!junkai);
     }
 
-    let temp: LatLng[][] = [[]];
+    let dddd: LatLng[][] = [[]];
     const onClickRouteSearch = async () => {
 
         console.log('point', point);
@@ -91,8 +91,8 @@ const DestinationMapPage = () => {
                 console.log('type', res.data.type);
                 console.log(res.data.route);
                 setPageLoading(false);
-                temp = res.data.route;
-                setPoly(temp);
+                dddd = res.data.route;
+                setPoly(dddd);
             })
             .catch(e => {
                 console.log('Post Error', e)
