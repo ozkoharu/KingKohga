@@ -5,7 +5,6 @@ import "leaflet/dist/leaflet.css"
 import { LocationPointContext } from "../../pages";
 //Marker壊れたとき用
 import * as L from "leaflet";
-import { kMaxLength } from "buffer";
 L.Icon.Default.imagePath = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/'
 
 const position = new LatLng(38.72311671577611, 141.0346841825174);

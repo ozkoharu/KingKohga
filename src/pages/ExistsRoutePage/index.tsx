@@ -84,9 +84,7 @@ const ExistsRoutePage = () => {
                     </BaseButton>
 
                 </BaseHeader >
-                <main>
-                    <DynamicRouteMap />
-                </main>
+                <DynamicRouteMap />
             </div>
         </>
     )
