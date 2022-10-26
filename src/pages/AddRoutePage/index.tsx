@@ -1,7 +1,7 @@
 import axios from "axios";
 import { LatLng } from "leaflet";
 import dynamic from "next/dynamic";
-import React, { useContext, useId, useState } from "react";
+import React, { useContext, useState } from "react";
 import { LocationPointContext, PageStateContext, UserIdContext } from "..";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { BaseCheckBox } from "../../component/atoms/checkbox/BaseCheckBox";
@@ -15,7 +15,7 @@ export const DynamicRouteMap = dynamic(() => {
 },
     { ssr: false }
 )
-const tktmdummy = 'http://tktm.kohga.local:3000/api/Astar';
+
 const PostDummyUrl = 'http://saza.kohga.local:3001/astar';
 const PostSaveRouteUrl = 'http://saza.kohga.local:3001/saveRoute';
 
@@ -23,7 +23,7 @@ const PostSaveRouteUrl = 'http://saza.kohga.local:3001/saveRoute';
 const AddRoutePage = () => {
     const { page, setPage } = useContext(PageStateContext);
     const { userId, setUserId } = useContext(UserIdContext);
-    const { point, setPoint, poly, setPoly } = useContext(LocationPointContext);
+    const { point, setPoint, poly, setPoly, middle, setMiddle, temp } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
     const [input, setInput] = useState('');
     const { setPageLoading } = useContext(LoadingContext);
@@ -67,20 +67,28 @@ const AddRoutePage = () => {
     }
 
     const PostData = {
-        "userId": useId,
+        "userId": userId,
         "junkai": junkai,
         "data": point
     }
 
-    let temp: LatLng[][] = [[]];
+    let dddd: LatLng[][] = [[]];
     const onClickRouteSearch = async () => {
-        //ここにaxiosの処理
+        console.log('PostData', PostData);
+        if (temp === -1) {
+            alert('中継点を追加してください');
+        } else {
+            console.log('afterPoint', point);
+            point.splice(temp + 1, 0, ...middle);
+            setMiddle([]);
+            console.log('beforePoint', point);
+        }
         setPageLoading(true);
         await axios.post(PostDummyUrl, PostData)
             .then((res) => {
                 setPageLoading(false);
-                temp = res.data.route;
-                setPoly(temp);
+                dddd = res.data.route;
+                setPoly(dddd);
             })
             .catch(e => {
                 setPageLoading(false);

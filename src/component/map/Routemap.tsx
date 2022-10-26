@@ -25,10 +25,13 @@ const RouteMap = () => {
     const ClickMarker = () => {
         useMapEvents({
             click(e) {
-                setPoint((prevValue) => {
-                    const newValue = [...prevValue, e.latlng]
-                    return newValue
-                });
+                if (pointFlag === false) {
+                    setPoint((prevValue) => {
+                        const newValue = [...prevValue, e.latlng]
+                        return newValue
+                    });
+
+                }
             },
 
         })
@@ -60,7 +63,6 @@ const RouteMap = () => {
                     const newValue = [...prevValue, e.latlng];
                     return newValue;
                 });
-
             }
         })
 
@@ -98,8 +100,22 @@ const RouteMap = () => {
                                 contextmenu: (e) => {
                                     if (confirm('これが新しい線です')) {
                                         setPointFlag(true);
-                                        console.log('e.target', e.target._latlngs[0]);
-                                        setTemp(e.target._latlngs);
+                                        console.log('latlng', e.target._latlngs);
+                                        console.log('point', point);
+                                        console.log(point.indexOf(e.target._latlngs[0]));
+                                        let index = 0;
+                                        for (const p of point) {
+                                            if (p.equals(e.target._latlngs[0])) {
+
+                                                break;
+                                            }
+                                            index++
+                                        }
+                                        if (index === point.length) {
+                                            index = -1;
+                                        }
+                                        setTemp(index);
+                                        console.log('index', index);
                                     } else {
                                         setPointFlag(false);
                                     }

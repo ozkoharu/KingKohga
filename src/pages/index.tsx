@@ -18,8 +18,8 @@ export const LocationPointContext = createContext({} as {
   setPoly: React.Dispatch<React.SetStateAction<LatLng[][]>>
   middle: LatLng[]
   setMiddle: React.Dispatch<React.SetStateAction<LatLng[]>>
-  temp: LatLng[],
-  setTemp: React.Dispatch<React.SetStateAction<LatLng[]>>
+  temp: number,
+  setTemp: React.Dispatch<React.SetStateAction<number>>
 });
 
 export const CircleContext = createContext({} as {
@@ -43,7 +43,7 @@ export const PageStateContext = createContext({} as {
 const Home: NextPage = () => {
   const [point, setPoint] = useState<LatLng[]>([]);
   const [middle, setMiddle] = useState<LatLng[]>([]);
-  const [temp, setTemp] = useState<LatLng[]>([]);
+  const [temp, setTemp] = useState<number>(0);
   const [poly, setPoly] = useState<LatLng[][]>([[]]);
   const [page, setPage] = useState<number>(0);
   const [radius, setRadius] = useState<number>(0);
