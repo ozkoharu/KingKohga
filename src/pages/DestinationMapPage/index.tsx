@@ -63,7 +63,7 @@ const DestinationMapPage = () => {
         event.stopPropagation()
     }
 
-    const PostData = {
+    const DestinationData = {
         "userId": userId,
         "junkai": junkai,
         "data": point
@@ -81,15 +81,15 @@ const DestinationMapPage = () => {
 
     let dddd: LatLng[][] = [[]];
     const onClickRouteSearch = async () => {
+        if (middle != null) {
 
+        }
         console.log('point', point);
         setPageLoading(true);
-        console.log("PostData", PostData);
-        await axios.post(PostDummyUrl, PostData)
+        console.log("PostData", DestinationData);
+        await axios.post(PostDummyUrl, DestinationData)
             .then((res) => {
-                console.log('res', res.data);
-                console.log('type', res.data.type);
-                console.log(res.data.route);
+
                 setPageLoading(false);
                 dddd = res.data.route;
                 setPoly(dddd);
