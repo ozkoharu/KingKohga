@@ -84,16 +84,19 @@ const AddRoutePage = () => {
         "relay": locationFlag
     }
 
+
     let dddd: LatLng[][] = [[]];
+    let eeee: LatLng[] = [];
     const onClickRouteSearch = async () => {
         setPointFlag(false);
         for (let i = 0; i < point.length; i++) {
             locationFlag[i] = false;
         }
         locationFlag.splice(temp + 1, 0, true);
+        locationFlag.pop;
         setLocationFlag(locationFlag);
         console.log('PostData', PostData);
-        console.log('locationFlag', locationFlag);
+
         if (temp === -1) {
             alert('中継点を追加してください');
         } else {
@@ -103,11 +106,16 @@ const AddRoutePage = () => {
             console.log('beforePoint', point);
         }
         setPageLoading(true);
+        console.log('locationFlag', locationFlag);
         await axios.post(PostDummyUrl, PostData)
             .then((res) => {
+
                 setPageLoading(false);
+                eeee = res.data.dest;
                 dddd = res.data.route;
                 setPoly(dddd);
+                setPoint(eeee);
+                console.log('dddd', dddd);
             })
             .catch(e => {
                 setPageLoading(false);

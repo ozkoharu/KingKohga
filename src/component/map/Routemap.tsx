@@ -9,13 +9,9 @@ L.Icon.Default.imagePath = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1
 
 const position = new LatLng(38.72311671577611, 141.0346841825174);
 const zoomlebel = 18;
-const blueOptions = {
-    color: "blue"
-}
 const greenOptions = {
     color: "green"
 }
-
 
 
 const RouteMap = () => {
@@ -43,7 +39,6 @@ const RouteMap = () => {
                         const newValue = [...prevValue, e.latlng]
                         return newValue
                     });
-
                 }
             },
 
@@ -92,7 +87,6 @@ const RouteMap = () => {
                                     let index = middle.indexOf(e.latlng);
                                     middle.splice(index, 1);
                                     setPoly([[]]);
-
                                 }
                             }
                         }}></Marker>)
