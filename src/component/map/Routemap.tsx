@@ -19,8 +19,8 @@ const greenOptions = {
 
 
 const RouteMap = () => {
-    const { poly, point, setPoint, setPoly, middle, setMiddle, temp, setTemp } = useContext(LocationPointContext);
-    const [pointFlag, setPointFlag] = useState<boolean>(false);
+    const { poly, point, setPoint, setPoly, middle, setMiddle, temp, setTemp, pointFlag, setPointFlag } = useContext(LocationPointContext);
+
 
     const ClickMarker = () => {
         useMapEvents({
@@ -106,7 +106,6 @@ const RouteMap = () => {
                                         let index = 0;
                                         for (const p of point) {
                                             if (p.equals(e.target._latlngs[0])) {
-
                                                 break;
                                             }
                                             index++

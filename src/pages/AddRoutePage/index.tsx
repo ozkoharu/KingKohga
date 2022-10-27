@@ -23,7 +23,7 @@ const PostSaveRouteUrl = 'http://saza.kohga.local:3001/saveRoute';
 const AddRoutePage = () => {
     const { page, setPage } = useContext(PageStateContext);
     const { userId, setUserId } = useContext(UserIdContext);
-    const { point, setPoint, poly, setPoly, middle, setMiddle, temp } = useContext(LocationPointContext);
+    const { point, setPoint, poly, setPoly, middle, setMiddle, temp, setPointFlag } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
     const [input, setInput] = useState('');
     const { setPageLoading } = useContext(LoadingContext);
@@ -74,6 +74,7 @@ const AddRoutePage = () => {
 
     let dddd: LatLng[][] = [[]];
     const onClickRouteSearch = async () => {
+        setPointFlag(false);
         console.log('PostData', PostData);
         if (temp === -1) {
             alert('中継点を追加してください');
