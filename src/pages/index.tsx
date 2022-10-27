@@ -1,7 +1,7 @@
 import { LatLng } from 'leaflet';
 import type { NextPage } from 'next'
 import { type } from 'os';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, ReactEventHandler, useEffect, useState } from 'react';
 import { Urltonumber } from '../component/onClickSetState/onClickSetState';
 import OriginPage from './Originpage';
 
@@ -22,6 +22,8 @@ export const LocationPointContext = createContext({} as {
   setTemp: React.Dispatch<React.SetStateAction<number>>
   pointFlag: boolean
   setPointFlag: React.Dispatch<React.SetStateAction<boolean>>
+  locationFlag: boolean[]
+  setLocationFlag: React.Dispatch<React.SetStateAction<boolean[]>>
 });
 
 export const CircleContext = createContext({} as {
@@ -52,11 +54,25 @@ const Home: NextPage = () => {
   const [circle, setCircle] = useState<LatLngRadius[]>([]);
   const [userId, setUserId] = useState<string>('');
   const [pointFlag, setPointFlag] = useState<boolean>(false);
+  const [locationFlag, setLocationFlag] = useState<boolean[]>([]);
 
   useEffect(() => window.addEventListener('popstate', () => setPage(Urltonumber(window.location.pathname))), [])
   return (
     <>
-      <LocationPointContext.Provider value={{ point, setPoint, poly, setPoly, middle, setMiddle, temp, setTemp, pointFlag, setPointFlag }}>
+      <LocationPointContext.Provider value={{
+        point,
+        setPoint,
+        poly,
+        setPoly,
+        middle,
+        setMiddle,
+        temp,
+        setTemp,
+        pointFlag,
+        setPointFlag,
+        locationFlag,
+        setLocationFlag
+      }}>
         <PageStateContext.Provider value={{ page, setPage }}>
           <CircleContext.Provider value={{ circle, setCircle, radius, setRadius }}>
             <UserIdContext.Provider value={{ userId, setUserId }}>

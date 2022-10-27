@@ -19,7 +19,20 @@ const greenOptions = {
 
 
 const RouteMap = () => {
-    const { poly, point, setPoint, setPoly, middle, setMiddle, temp, setTemp, pointFlag, setPointFlag } = useContext(LocationPointContext);
+    const {
+        poly,
+        point,
+        setPoint,
+        setPoly,
+        middle,
+        setMiddle,
+        temp,
+        setTemp,
+        pointFlag,
+        setPointFlag,
+        locationFlag,
+        setLocationFlag,
+    } = useContext(LocationPointContext);
 
 
     const ClickMarker = () => {
@@ -79,6 +92,7 @@ const RouteMap = () => {
                                     let index = middle.indexOf(e.latlng);
                                     middle.splice(index, 1);
                                     setPoly([[]]);
+
                                 }
                             }
                         }}></Marker>)
@@ -98,8 +112,9 @@ const RouteMap = () => {
                             key={index}
                             eventHandlers={{
                                 contextmenu: (e) => {
-                                    if (confirm('これが新しい線です')) {
+                                    if (confirm('中継点を追加してください')) {
                                         setPointFlag(true);
+
                                         console.log('latlng', e.target._latlngs);
                                         console.log('point', point);
                                         console.log(point.indexOf(e.target._latlngs[0]));
