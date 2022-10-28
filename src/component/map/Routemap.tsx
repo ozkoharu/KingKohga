@@ -10,7 +10,7 @@ L.Icon.Default.imagePath = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1
 const position = new LatLng(38.72311671577611, 141.0346841825174);
 const zoomlebel = 18;
 const greenOptions = {
-    color: "green"
+    color: "green",
 }
 
 
@@ -36,6 +36,9 @@ const RouteMap = () => {
         setNewMiddle } = useContext(NewPointContext);
 
     const ClickMarker = () => {
+        console.log('ClickMarkerの一番最初', pointFlag);
+        console.log('ClickMarkerの一番最初point', point)
+        console.log('ClickMarkerの一番最初newPoint', newPoint);
         useMapEvents({
             click(e) {
                 if (pointFlag === false) {
@@ -43,6 +46,10 @@ const RouteMap = () => {
                         const newValue = [...prevValue, e.latlng]
                         return newValue
                     });
+                    setNewPoint((prevValue) => {
+                        const newValue = [...prevValue, { Point: e.latlng, Relay: false }]
+                        return newValue
+                    })
                 }
             },
         })
@@ -66,21 +73,6 @@ const RouteMap = () => {
                                 }}
                             ></Marker>
                     )
-
-                    // point.map((pos, index) => <Marker
-                    //     position={pos}
-                    //     key={index}
-                    //     riseOnHover={true}
-                    //     eventHandlers={{
-                    //         contextmenu: (e) => {
-                    //             if (confirm('この目的地を削除します')) {
-                    //                 let index = point.indexOf(e.latlng);
-                    //                 point.splice(index, 1);
-                    //                 setPoly([[]]);
-                    //             }
-                    //         }
-                    //     }}
-                    // ></Marker>)
                 }
             </React.Fragment>
         )
@@ -119,11 +111,13 @@ const RouteMap = () => {
         )
     }
     const MultiPoly = () => {
+        console.log('poly', poly)
         return (
             <React.Fragment>
                 {
-                    poly.map((elem, index) =>
-                        <Polyline
+                    poly.map((elem, index) => {
+                        console.log('elem', elem);
+                        return <Polyline
                             weight={20}
                             pathOptions={greenOptions}
                             positions={elem}
@@ -134,7 +128,6 @@ const RouteMap = () => {
                                         setPointFlag(true);
                                         console.log('e.target._latlngs', e.target._latlngs);
                                         console.log('point', point);
-
                                         let index = 0;
                                         for (const p of point) {
                                             if (p.equals(e.target._latlngs[0])) {
@@ -151,8 +144,10 @@ const RouteMap = () => {
                                         setPointFlag(false);
                                     }
                                 },
-                            }}>
-                        </Polyline>)
+                            }}
+                        />
+                    }
+                    )
                 }
             </React.Fragment>
         )
