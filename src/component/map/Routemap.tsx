@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 import { MapContainer, Marker, Polyline, TileLayer, useMapEvents } from "react-leaflet"
 import { LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css"
-import { LocationPointContext } from "../../pages";
+import { LocationPointContext, NewPointContext } from "../../pages";
 //Marker壊れたとき用
 import * as L from "leaflet";
 L.Icon.Default.imagePath = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/'
@@ -20,16 +20,20 @@ const RouteMap = () => {
         point,
         setPoint,
         setPoly,
-        middle,
-        setMiddle,
         temp,
         setTemp,
         pointFlag,
         setPointFlag,
-        locationFlag,
-        setLocationFlag,
+        relayFlag,
+        setRelayFlag,
     } = useContext(LocationPointContext);
-
+    const {
+        newPoint,
+        setNewPoint,
+        middle,
+        setMiddle,
+        newMiddle,
+        setNewMiddle } = useContext(NewPointContext);
 
     const ClickMarker = () => {
         useMapEvents({
@@ -41,25 +45,42 @@ const RouteMap = () => {
                     });
                 }
             },
-
         })
         return (
             <React.Fragment>
                 {
-                    point.map((pos, index) => <Marker
-                        position={pos}
-                        key={index}
-                        riseOnHover={true}
-                        eventHandlers={{
-                            contextmenu: (e) => {
-                                if (confirm('この目的地を削除します')) {
-                                    let index = point.indexOf(e.latlng);
-                                    point.splice(index, 1);
-                                    setPoly([[]]);
-                                }
-                            }
-                        }}
-                    ></Marker>)
+                    newPoint.map((n, index) =>
+                        n.Relay ? <></> :
+                            <Marker
+                                position={n.Point}
+                                key={index}
+                                riseOnHover={true}
+                                eventHandlers={{
+                                    contextmenu: (e) => {
+                                        if (confirm('この目的地を削除しますか?')) {
+                                            let index = point.indexOf(e.latlng);
+                                            point.splice(index, 1);
+                                            setPoly([[]]);
+                                        }
+                                    }
+                                }}
+                            ></Marker>
+                    )
+
+                    // point.map((pos, index) => <Marker
+                    //     position={pos}
+                    //     key={index}
+                    //     riseOnHover={true}
+                    //     eventHandlers={{
+                    //         contextmenu: (e) => {
+                    //             if (confirm('この目的地を削除します')) {
+                    //                 let index = point.indexOf(e.latlng);
+                    //                 point.splice(index, 1);
+                    //                 setPoly([[]]);
+                    //             }
+                    //         }
+                    //     }}
+                    // ></Marker>)
                 }
             </React.Fragment>
         )
@@ -68,23 +89,26 @@ const RouteMap = () => {
         useMapEvents({
             click(e) {
                 setMiddle((prevValue) => {
+                    const newValue = [...prevValue, { Point: e.latlng, Relay: true }];
+                    return newValue;
+                });
+                setNewMiddle((prevValue) => {
                     const newValue = [...prevValue, e.latlng];
                     return newValue;
                 });
             }
         })
-
         return (
             <React.Fragment>
                 {
                     middle.map((pos, index) => <Marker
-                        position={pos}
+                        position={pos.Point}
                         key={index}
                         riseOnHover={true}
                         eventHandlers={{
                             contextmenu: (e) => {
                                 if (confirm('この目的地を削除します')) {
-                                    let index = middle.indexOf(e.latlng);
+                                    let index = middle.indexOf({ Point: e.latlng, Relay: true });
                                     middle.splice(index, 1);
                                     setPoly([[]]);
                                 }
@@ -108,10 +132,9 @@ const RouteMap = () => {
                                 contextmenu: (e) => {
                                     if (confirm('中継点を追加してください')) {
                                         setPointFlag(true);
-
-                                        console.log('latlng', e.target._latlngs);
+                                        console.log('e.target._latlngs', e.target._latlngs);
                                         console.log('point', point);
-                                        console.log(point.indexOf(e.target._latlngs[0]));
+
                                         let index = 0;
                                         for (const p of point) {
                                             if (p.equals(e.target._latlngs[0])) {

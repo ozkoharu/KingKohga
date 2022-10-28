@@ -2,7 +2,7 @@ import axios from "axios";
 import { LatLng } from "leaflet";
 import dynamic from "next/dynamic";
 import React, { useContext, useState } from "react";
-import { LocationPointContext, PageStateContext, UserIdContext } from "..";
+import { LocationPointContext, NewPointContext, PageStateContext, UserIdContext } from "..";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { BaseCheckBox } from "../../component/atoms/checkbox/BaseCheckBox";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
@@ -15,6 +15,10 @@ export const DynamicRouteMap = dynamic(() => {
 },
     { ssr: false }
 )
+export interface newPoint {
+    Point: LatLng
+    Relay: boolean
+}
 
 const PostDummyUrl = 'http://saza.kohga.local:3001/astar';
 const PostSaveRouteUrl = 'http://saza.kohga.local:3001/saveRoute';
@@ -24,16 +28,22 @@ const AddRoutePage = () => {
     const { page, setPage } = useContext(PageStateContext);
     const { userId, setUserId } = useContext(UserIdContext);
     const {
+        newPoint,
+        setNewPoint,
+        middle,
+        setMiddle,
+        newMiddle,
+        setNewMiddle } = useContext(NewPointContext);
+    const {
         point,
         setPoint,
         poly,
         setPoly,
-        middle,
-        setMiddle,
         temp,
+        pointFlag,
         setPointFlag,
-        locationFlag,
-        setLocationFlag
+        relayFlag,
+        setRelayFlag
     } = useContext(LocationPointContext);
     const [junkai, setJunkai] = useState(false)
     const [input, setInput] = useState('');
@@ -68,9 +78,7 @@ const AddRoutePage = () => {
                 console.log(e);
             })
     }
-    const routeGoChcek = () => {
-        //実行可能チェック
-    }
+
     const onClickBack = () => {
         setPoint([]);
         setPoly([[]]);
@@ -81,46 +89,48 @@ const AddRoutePage = () => {
         "userId": userId,
         "junkai": junkai,
         "data": point,
-        "relay": locationFlag
+        "relay": relayFlag
     }
 
 
-    let dddd: LatLng[][] = [[]];
-    let eeee: LatLng[] = [];
-    const onClickRouteSearch = async () => {
-        setPointFlag(false);
-        for (let i = 0; i < point.length; i++) {
-            locationFlag[i] = false;
-        }
-        locationFlag.splice(temp + 1, 0, true);
-        locationFlag.pop;
-        setLocationFlag(locationFlag);
-        console.log('PostData', PostData);
+    let polyData: LatLng[][] = [[]];
 
-        if (temp === -1) {
-            alert('中継点を追加してください');
-        } else {
-            console.log('afterPoint', point);
-            point.splice(temp + 1, 0, ...middle);
-            setMiddle([]);
-            console.log('beforePoint', point);
+    const onClickRouteSearch = async () => {
+        if (pointFlag) {
+            if (temp === -1) {
+                alert('中継点を追加してください');
+
+            } else {
+                //ここら辺に問題がありそう一回目の.spliceはいいけど２回目以降が動かない多分２回目からはtemp + 1じゃ無理くない？
+                newPoint.splice(temp + 1, 0, ...middle);
+                point.splice(temp + 1, 0, ...newMiddle);
+                for (let i = 0; i < newPoint.length; i++) {
+                    relayFlag[i] = newPoint[i].Relay;
+                }
+                relayFlag.pop();
+                setMiddle([]);
+                setNewMiddle([]);
+            }
         }
+
         setPageLoading(true);
-        console.log('locationFlag', locationFlag);
+        console.log('point', point);
+        console.log('relayFlag', relayFlag);
+        console.log('newPoint', newPoint);
+        console.log('PostData', PostData);
         await axios.post(PostDummyUrl, PostData)
             .then((res) => {
-
                 setPageLoading(false);
-                eeee = res.data.dest;
-                dddd = res.data.route;
-                setPoly(dddd);
-                setPoint(eeee);
-                console.log('dddd', dddd);
+                polyData = res.data.route;
+                setPoly(polyData);
+                console.log('res', res.data.route);
+                setPointFlag(false);
             })
             .catch(e => {
                 setPageLoading(false);
             })
             .finally(() => {
+
                 OnClickSetState(4, setPage);
             })
     }

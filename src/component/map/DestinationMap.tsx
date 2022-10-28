@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react"
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet"
 import { LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css"
-import { LocationPointContext } from "../../pages";
+import { LocationPointContext, NewPointContext } from "../../pages";
 //Marker壊れたとき用
 import L from "leaflet"
 import { loadComponents } from "next/dist/server/load-components";
@@ -24,6 +24,7 @@ const ClickMarker = () => {
         },
 
     })
+
     return (
         <React.Fragment>
             {point.map((pos, index) => <Marker

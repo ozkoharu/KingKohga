@@ -4,11 +4,12 @@ import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { BaseCheckBox } from "../../component/atoms/checkbox/BaseCheckBox";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
-import { LocationPointContext, PageStateContext, UserIdContext } from "..";
+import { LocationPointContext, NewPointContext, PageStateContext, UserIdContext } from "..";
 import axios from "axios";
 import { LatLng } from "leaflet";
 import { LoadingContext } from "../_app";
 import { BaseFooter } from "../../component/template/Footer/BaseFooter";
+import { newPoint } from "../AddRoutePage";
 
 
 const PostDummyUrl = 'http://saza.kohga.local:3001/astar';
@@ -41,8 +42,9 @@ const Modal: React.FC<Props> = ({
 
 const DestinationMapPage = () => {
     const { setPage } = useContext(PageStateContext);
-    const { point, poly, setPoly, setPoint, middle, setMiddle, setTemp, temp } = useContext(LocationPointContext);
+    const { point, poly, setPoly, setPoint, setTemp, temp } = useContext(LocationPointContext);
     const { userId, setUserId } = useContext(UserIdContext);
+    const { newPoint, setNewPoint, middle, setMiddle, } = useContext(NewPointContext);
     const [junkai, setJunkai] = useState(false)
     const { setPageLoading } = useContext(LoadingContext);
     const [isModalOpen, setIsModalOpen] = useState(true);
@@ -63,8 +65,6 @@ const DestinationMapPage = () => {
         event.stopPropagation()
     }
 
-
-
     const onClickBack = () => {
         setPoint([]);
         setPoly([[]]);
@@ -79,18 +79,27 @@ const DestinationMapPage = () => {
         setJunkai(!junkai);
     }
 
-    let dddd: LatLng[][] = [[]];
+    let polyData: LatLng[][] = [[]];
     const onClickRouteSearch = async () => {
-        console.log(point);
+        let ababa: newPoint[] = [];
+        for (let i = 0; i < point.length; i++) {
+            ababa[i] = {
+                Point: point[i],
+                Relay: false,
+            }
+        }
+        setNewPoint(ababa);
+
         console.log('point', point);
+        console.log('newPoint', ababa);
         setPageLoading(true);
         console.log("PostData", DestinationData);
 
         await axios.post(PostDummyUrl, DestinationData)
             .then((res) => {
                 setPageLoading(false);
-                dddd = res.data.route;
-                setPoly(dddd);
+                polyData = res.data.route;
+                setPoly(polyData);
             })
             .catch(e => {
                 console.log('Post Error', e)
