@@ -13,7 +13,6 @@ const greenOptions = {
     color: "green",
 }
 
-
 const RouteMap = () => {
     const {
         poly,
@@ -123,7 +122,7 @@ const RouteMap = () => {
                             positions={elem}
                             key={index}
                             eventHandlers={{
-                                contextmenu: (e) => {
+                                click: (e) => {
                                     if (confirm('中継点を追加してください')) {
                                         setPointFlag(true);
                                         console.log('e.target._latlngs', e.target._latlngs);

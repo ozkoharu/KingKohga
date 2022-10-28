@@ -92,14 +92,12 @@ const AddRoutePage = () => {
         "relay": relayFlag
     }
 
-
     let polyData: LatLng[][] = [[]];
 
     const onClickRouteSearch = async () => {
         if (pointFlag) {
             if (temp === -1) {
                 alert('中継点を追加してください');
-
             } else {
                 //ここら辺に問題がありそう一回目の.spliceはいいけど２回目以降が動かない多分２回目からはtemp + 1じゃ無理くない？
                 newPoint.splice(temp + 1, 0, ...middle);
@@ -118,6 +116,7 @@ const AddRoutePage = () => {
         console.log('relayFlag', relayFlag);
         console.log('newPoint', newPoint);
         console.log('PostData', PostData);
+
         await axios.post(PostDummyUrl, PostData)
             .then((res) => {
                 setPageLoading(false);
@@ -150,7 +149,10 @@ const AddRoutePage = () => {
                         保存
                     </BaseButton>
                     <BaseButton onClick={onClickBack} _className="button">
-                        戻る
+                        TOPへ戻る
+                    </BaseButton>
+                    <BaseButton onClick={() => OnClickSetState(2, setPage)} _className="button">
+                        目的地入力へ戻る
                     </BaseButton>
                     <BaseButton onClick={onClickRouteSearch} _className="button">
                         経路探索

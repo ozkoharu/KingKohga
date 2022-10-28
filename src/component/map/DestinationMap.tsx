@@ -14,7 +14,7 @@ const zoomlebel = 18;
 
 const ClickMarker = () => {
 
-    const { point, setPoint } = useContext(LocationPointContext);
+    const { point, setPoint, setPoly } = useContext(LocationPointContext);
     useMapEvents({
         click(e) {
             setPoint((prevValue) => {
@@ -30,7 +30,18 @@ const ClickMarker = () => {
             {point.map((pos, index) => <Marker
                 position={pos}
                 key={index}
-                riseOnHover={true}></Marker>)}
+                riseOnHover={true}
+                eventHandlers={{
+                    contextmenu: (e) => {
+                        if (confirm('この目的地を削除しますか？')) {
+                            let index = point.indexOf(e.latlng);
+                            point.splice(index, 1);
+                            setPoly([[]]);
+                        }
+                    }
+                }}
+            >
+            </Marker>)}
         </React.Fragment>
     )
 }

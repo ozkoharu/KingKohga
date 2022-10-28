@@ -1,12 +1,28 @@
+import axios from "axios";
 import React, { useContext } from "react";
-import { PageStateContext } from "..";
+import { PageStateContext, UserIdContext } from "..";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
 import { BaseFooter } from "../../component/template/Footer/BaseFooter";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
 
+const Url = 'http://saza.kohga.local:3001/terminate';
 const EndPage = () => {
     const { setPage } = useContext(PageStateContext);
+    const { userId, setUserId } = useContext(UserIdContext);
+    const EndData = {
+        "userId": userId
+    }
+    const onClickEnd = async () => {
+        await axios.post(Url, EndData)
+            .then((res) => {
+                console.log(res);
+            }).catch((e) => {
+                console.log(e);
+            })
+        OnClickSetState(0, setPage);
+    }
+
     return (
         <>
             <div className="container end">
@@ -22,7 +38,7 @@ const EndPage = () => {
 
 
                     <div>
-                        <BaseButton onClick={() => OnClickSetState(0, setPage)} _className="button">
+                        <BaseButton onClick={onClickEnd} _className="button">
                             TOPへ
                         </BaseButton>
                     </div>

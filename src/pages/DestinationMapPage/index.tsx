@@ -42,7 +42,7 @@ const Modal: React.FC<Props> = ({
 
 const DestinationMapPage = () => {
     const { setPage } = useContext(PageStateContext);
-    const { point, poly, setPoly, setPoint, setTemp, temp } = useContext(LocationPointContext);
+    const { point, poly, setPoly, setPoint, setTemp, temp, relayFlag, setRelayFlag } = useContext(LocationPointContext);
     const { userId, setUserId } = useContext(UserIdContext);
     const { newPoint, setNewPoint, middle, setMiddle, } = useContext(NewPointContext);
     const [junkai, setJunkai] = useState(false)
@@ -73,7 +73,8 @@ const DestinationMapPage = () => {
     const DestinationData = {
         "userId": userId,
         "junkai": junkai,
-        "data": point
+        "data": point,
+        "relay": relayFlag
     }
     const onClickJunkai = () => {
         setJunkai(!junkai);
@@ -87,9 +88,9 @@ const DestinationMapPage = () => {
                 Point: point[i],
                 Relay: false,
             }
+            relayFlag[i] = ababa[i].Relay;
         }
         setNewPoint(ababa);
-
         console.log('point', point);
         console.log('newPoint', ababa);
         setPageLoading(true);
@@ -108,6 +109,12 @@ const DestinationMapPage = () => {
             .finally(() => {
                 OnClickSetState(4, setPage);
             })
+
+    }
+
+    const riset = () => {
+        setPoint([]);
+        setNewPoint([]);
     }
     return (
         <>
@@ -125,6 +132,9 @@ const DestinationMapPage = () => {
                         戻る
                     </BaseButton>
                     <button className="button" onClick={(event) => { openModal(event) }}>チュートリアルを開く</button>
+                    <BaseButton _className="button" onClick={riset}>
+                        目的地リセット
+                    </BaseButton>
                 </BaseHeader>
 
                 <DynamicMap />
