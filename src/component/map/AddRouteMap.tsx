@@ -10,14 +10,9 @@ L.Icon.Default.imagePath = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1
 
 const position = new LatLng(38.72311671577611, 141.0346841825174);
 const zoomlebel = 18;
-const blueOptions = {
-    color: "blue"
-}
-const greenOptions = {
+let path = {
     color: "green"
 }
-
-
 
 const RouteMap = () => {
     const {
@@ -38,7 +33,9 @@ const RouteMap = () => {
         middle,
         setMiddle,
         newMiddle,
-        setNewMiddle } = useContext(NewPointContext);
+        setNewMiddle
+    } = useContext(NewPointContext);
+    const [color, setColor] = useState(false);
 
     const ViewMarker = () => {
         return (
@@ -104,6 +101,8 @@ const RouteMap = () => {
     }
 
 
+
+
     const MultiPoly = () => {
         return (
             <React.Fragment>
@@ -111,7 +110,7 @@ const RouteMap = () => {
                     poly.map((elem, index) =>
                         <Polyline
                             weight={20}
-                            pathOptions={greenOptions}
+                            pathOptions={path}
                             positions={elem}
                             key={index}
                             eventHandlers={{
@@ -135,6 +134,23 @@ const RouteMap = () => {
                                         setPointFlag(false);
                                     }
                                 },
+                                mousemove: (e) => {
+                                    console.log(e.target._path.style)
+                                    setColor(true);
+                                    if (color) {
+                                        path = {
+                                            color: "blue"
+                                        }
+
+
+                                        setColor(false);
+                                    } else {
+                                        path = {
+                                            color: "red"
+                                        }
+
+                                    }
+                                }
                             }}>
                         </Polyline>)
                 }

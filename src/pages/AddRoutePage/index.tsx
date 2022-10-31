@@ -154,7 +154,6 @@ const AddRoutePage = () => {
             if (temp === -1) {
                 alert('中継点を追加してください');
             } else {
-                //ここら辺に問題がありそう一回目の.spliceはいいけど２回目以降が動かない多分２回目からはtemp + 1じゃ無理くない？
                 newPoint.splice(temp + 1, 0, ...middle);
                 point.splice(temp + 1, 0, ...newMiddle);
                 for (let i = 0; i < newPoint.length; i++) {
