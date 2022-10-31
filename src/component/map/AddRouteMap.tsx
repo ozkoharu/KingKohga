@@ -141,8 +141,6 @@ const RouteMap = () => {
                                         path = {
                                             color: "blue"
                                         }
-
-
                                         setColor(false);
                                     } else {
                                         path = {
