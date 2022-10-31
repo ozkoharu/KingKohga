@@ -1,4 +1,5 @@
 import axios from "axios";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import React, { useContext } from "react";
 import { LocationPointContext, PageStateContext, UserIdContext } from "..";
@@ -9,6 +10,12 @@ import { BaseHeader } from "../../component/template/Header/BaseHeader";
 import { DynamicRouteMap } from "../AddRoutePage";
 
 const Url = "http://tktm.kohga.local:3000/next"
+
+export const DynamicCarWatchPage = dynamic(() => {
+    return import('../../component/map/CarWatchMap');
+},
+    { ssr: false }
+)
 
 const CarWatchPage = () => {
     const { setPage } = useContext(PageStateContext);
@@ -48,9 +55,7 @@ const CarWatchPage = () => {
                         車を停止
                     </BaseButton>
                 </BaseHeader>
-                <main>
-                    <DynamicRouteMap />
-                </main>
+                <DynamicCarWatchPage />
                 <BaseFooter />
             </div>
         </>

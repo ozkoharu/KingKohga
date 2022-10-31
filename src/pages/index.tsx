@@ -49,7 +49,10 @@ export const PageStateContext = createContext({} as {
   page: number
   setPage: React.Dispatch<React.SetStateAction<number>>
 });
-
+export const ExistsToAddRouteContext = createContext({} as {
+  goRoute: boolean
+  setGoRoute: React.Dispatch<React.SetStateAction<boolean>>
+})
 
 const Home: NextPage = () => {
   const [point, setPoint] = useState<LatLng[]>([]);
@@ -64,6 +67,7 @@ const Home: NextPage = () => {
   const [pointFlag, setPointFlag] = useState<boolean>(false);
   const [relayFlag, setRelayFlag] = useState<boolean[]>([]);
   const [newPoint, setNewPoint] = useState<newPoint[]>([]);
+  const [goRoute, setGoRoute] = useState<boolean>(false);
 
   useEffect(() => window.addEventListener('popstate', () => setPage(Urltonumber(window.location.pathname))), [])
   return (
@@ -89,11 +93,13 @@ const Home: NextPage = () => {
           setNewMiddle
         }}>
           <PageStateContext.Provider value={{ page, setPage }}>
-            <CircleContext.Provider value={{ circle, setCircle, radius, setRadius }}>
-              <UserIdContext.Provider value={{ userId, setUserId }}>
-                <OriginPage />
-              </UserIdContext.Provider>
-            </CircleContext.Provider>
+            <ExistsToAddRouteContext.Provider value={{ goRoute, setGoRoute }}>
+              <CircleContext.Provider value={{ circle, setCircle, radius, setRadius }}>
+                <UserIdContext.Provider value={{ userId, setUserId }}>
+                  <OriginPage />
+                </UserIdContext.Provider>
+              </CircleContext.Provider>
+            </ExistsToAddRouteContext.Provider>
           </PageStateContext.Provider>
         </NewPointContext.Provider>
       </LocationPointContext.Provider>

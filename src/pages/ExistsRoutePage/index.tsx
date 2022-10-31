@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { LocationPointContext, PageStateContext, UserIdContext } from "..";
+import { ExistsToAddRouteContext, LocationPointContext, PageStateContext, UserIdContext } from "..";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
 import { DynamicRouteMap } from "../AddRoutePage";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
+import { DynamicCarWatchPage } from "../CarWatchPage";
 
 const RouteNameUrl = "http://saza.kohga.local:3001/routeName"
 const reqRouteUrl = "http://saza.kohga.local:3001/reqRoute"
@@ -16,6 +17,7 @@ const ExistsRoutePage = () => {
     const [routeName, setRouteName] = useState<string[]>([]);
     const [select, setSelect] = useState('');
     const [single, setSingle] = useState('');
+    const { setGoRoute } = useContext(ExistsToAddRouteContext);
 
     const PostUserId = {
         "userId": userId,
@@ -45,6 +47,7 @@ const ExistsRoutePage = () => {
     }
 
     const goRoute = () => {
+        setGoRoute(true);
         OnClickSetState(4, setPage)
     }
     const backCarMenu = () => {
@@ -83,7 +86,7 @@ const ExistsRoutePage = () => {
                     </BaseButton>
 
                 </BaseHeader >
-                <DynamicRouteMap />
+                <DynamicCarWatchPage />
             </div>
         </>
     )

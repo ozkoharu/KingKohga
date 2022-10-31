@@ -2,7 +2,7 @@ import axios from "axios";
 import { LatLng } from "leaflet";
 import dynamic from "next/dynamic";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { LocationPointContext, NewPointContext, PageStateContext, UserIdContext } from "..";
+import { ExistsToAddRouteContext, LocationPointContext, NewPointContext, PageStateContext, UserIdContext } from "..";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { BaseCheckBox } from "../../component/atoms/checkbox/BaseCheckBox";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
@@ -76,13 +76,24 @@ const AddRoutePage = () => {
     const [junkai, setJunkai] = useState(false)
     const [input, setInput] = useState('');
     const { setPageLoading } = useContext(LoadingContext);
+    const { goRoute, setGoRoute } = useContext(ExistsToAddRouteContext);
     const [isModalOpen, setIsModalOpen] = useState(true);
+
 
     const closeModal = useCallback(() => {
         setIsModalOpen(false);
     }, [])
 
     useEffect(() => {
+        if (goRoute) {
+            let index = 0;
+            let hoge: newPoint[] = [];
+            for (const p of point) {
+                hoge[index] = { Point: point[index], Relay: false };
+                index++;
+            }
+            setNewPoint(hoge);
+        }
         return () => {
             document.removeEventListener('click', closeModal);
         }
