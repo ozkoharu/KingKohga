@@ -15,6 +15,13 @@ export const DynamicRouteMap = dynamic(() => {
 },
     { ssr: false }
 )
+
+export const AddRouteMap = dynamic(() => {
+    return import('../../component/map/AddRouteMap')
+},
+    { ssr: false }
+)
+
 export interface newPoint {
     Point: LatLng
     Relay: boolean
@@ -158,7 +165,7 @@ const AddRoutePage = () => {
                         経路探索
                     </BaseButton>
                 </BaseHeader>
-                <DynamicRouteMap />
+                <AddRouteMap />
 
                 <BaseFooter />
 

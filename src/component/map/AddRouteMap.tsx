@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 import { MapContainer, Marker, Polyline, TileLayer, useMapEvents } from "react-leaflet"
 import { LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css"
-import { LocationPointContext } from "../../pages";
+import { LocationPointContext, NewPointContext } from "../../pages";
 //Marker壊れたとき用
 import * as L from "leaflet";
 import { kMaxLength } from "buffer";
@@ -20,8 +20,90 @@ const greenOptions = {
 
 
 const RouteMap = () => {
-    const { poly, point, setPoint, setPoly } = useContext(LocationPointContext);
-    const [pointFlag, setPointFlag] = useState<boolean>(false);
+    const {
+        poly,
+        point,
+        setPoint,
+        setPoly,
+        temp,
+        setTemp,
+        pointFlag,
+        setPointFlag,
+        relayFlag,
+        setRelayFlag,
+    } = useContext(LocationPointContext);
+    const {
+        newPoint,
+        setNewPoint,
+        middle,
+        setMiddle,
+        newMiddle,
+        setNewMiddle } = useContext(NewPointContext);
+
+    const ViewMarker = () => {
+        return (
+            <React.Fragment>
+                {
+                    newPoint.map((n, index) =>
+                        n.Relay ? <></> :
+                            <Marker
+                                position={n.Point}
+                                key={index}
+                                riseOnHover={true}
+                                eventHandlers={{
+                                    contextmenu: (e) => {
+                                        if (confirm('この目的地を削除しますか?')) {
+                                            let index = point.indexOf(e.latlng);
+                                            point.splice(index, 1);
+                                            setPoly([[]]);
+                                        }
+                                    }
+                                }}
+                            ></Marker>
+                    )
+                }
+            </React.Fragment>
+        )
+    }
+
+    const MiddleClickMarker = () => {
+        useMapEvents({
+            click(e) {
+                setMiddle((prevValue) => {
+                    const newValue = [...prevValue, { Point: e.latlng, Relay: true }];
+                    return newValue;
+                });
+                setNewMiddle((prevValue) => {
+                    const newValue = [...prevValue, e.latlng];
+                    return newValue;
+                })
+            }
+        })
+        return (
+            <React.Fragment>
+                {
+                    middle.map((pos, index) =>
+                        <Marker
+                            position={pos.Point}
+                            key={index}
+                            riseOnHover={true}
+                            eventHandlers={{
+                                contextmenu: (e) => {
+                                    if (confirm('この目的地を削除します')) {
+                                        let index = middle.indexOf({ Point: e.latlng, Relay: true });
+                                        middle.splice(index, 1);
+                                        setPoly([[]]);
+                                    }
+                                }
+                            }}
+                        ></Marker>
+                    )
+                }
+            </React.Fragment>
+        )
+    }
+
+
     const MultiPoly = () => {
         return (
             <React.Fragment>
@@ -33,10 +115,22 @@ const RouteMap = () => {
                             positions={elem}
                             key={index}
                             eventHandlers={{
-                                contextmenu: (e) => {
-                                    if (confirm('これが新しい線です')) {
+                                click: (e) => {
+                                    if (confirm('中継点を追加してください')) {
                                         setPointFlag(true);
                                         console.log('e.target', e.target._latlngs);
+                                        let index = 0;
+                                        for (const p of point) {
+                                            if (p.equals(e.target._latlngs[0])) {
+                                                break;
+                                            }
+                                            index++;
+                                        }
+                                        if (index === point.length) {
+                                            index = -1;
+                                        }
+                                        setTemp(index);
+                                        console.log('index', index);
                                     } else {
                                         setPointFlag(false);
                                     }
@@ -54,6 +148,10 @@ const RouteMap = () => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <MultiPoly />
+            <ViewMarker />
+            {
+                pointFlag ? <MiddleClickMarker /> : <></>
+            }
 
         </MapContainer>
     )
