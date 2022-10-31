@@ -27,7 +27,7 @@ const ExistsRoutePage = () => {
                 setRouteName(res.data.routeName);
             })
             .catch((e) => console.log(e))
-    }, [PostUserId])
+    }, [])
 
 
     const reqRoute = async (routename: string) => {
