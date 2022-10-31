@@ -1,7 +1,7 @@
 import axios from "axios";
 import { LatLng } from "leaflet";
 import dynamic from "next/dynamic";
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { LocationPointContext, NewPointContext, PageStateContext, UserIdContext } from "..";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { BaseCheckBox } from "../../component/atoms/checkbox/BaseCheckBox";
@@ -27,9 +27,30 @@ export interface newPoint {
     Relay: boolean
 }
 
+interface Props {
+    closeHandler: () => void
+}
+
+
 const PostDummyUrl = 'http://saza.kohga.local:3001/astar';
 const PostSaveRouteUrl = 'http://saza.kohga.local:3001/saveRoute';
 
+const Modal: React.FC<Props> = ({
+    closeHandler,
+}) => {
+    return (
+        <>
+            <div className='modalContainer' onClick={closeHandler}>
+                <div className="modalBody">
+                    <p>モーダル</p>
+                    <div className="modalButtons">
+                        <button onClick={closeHandler}>閉じるボタン</button>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
 
 const AddRoutePage = () => {
     const { page, setPage } = useContext(PageStateContext);
@@ -55,7 +76,23 @@ const AddRoutePage = () => {
     const [junkai, setJunkai] = useState(false)
     const [input, setInput] = useState('');
     const { setPageLoading } = useContext(LoadingContext);
+    const [isModalOpen, setIsModalOpen] = useState(true);
 
+    const closeModal = useCallback(() => {
+        setIsModalOpen(false);
+    }, [])
+
+    useEffect(() => {
+        return () => {
+            document.removeEventListener('click', closeModal);
+        }
+    }, [closeModal])
+
+    const openModal = (event: React.MouseEvent) => {
+        setIsModalOpen(true);
+        document.addEventListener('click', closeModal);
+        event.stopPropagation()
+    }
 
     const onClickJunkai = () => {
         setJunkai(!junkai);
@@ -166,7 +203,9 @@ const AddRoutePage = () => {
                     </BaseButton>
                 </BaseHeader>
                 <AddRouteMap />
-
+                {
+                    isModalOpen ? <Modal closeHandler={closeModal} /> : <></>
+                }
                 <BaseFooter />
 
             </div>
