@@ -38,6 +38,10 @@ export const CircleContext = createContext({} as {
   setCircle: React.Dispatch<React.SetStateAction<LatLngRadius[]>>
   radius: number
   setRadius: React.Dispatch<React.SetStateAction<number>>
+  viewcircle: LatLngRadius[]
+  setViewCircle: React.Dispatch<React.SetStateAction<LatLngRadius[]>>
+  viewRadius: number
+  setViewRadius: React.Dispatch<React.SetStateAction<number>>
 })
 
 export const UserIdContext = createContext({} as {
@@ -53,6 +57,14 @@ export const ExistsToAddRouteContext = createContext({} as {
   goRoute: boolean
   setGoRoute: React.Dispatch<React.SetStateAction<boolean>>
 })
+export const ChangeShortCut = createContext({} as {
+  firstPage: boolean;
+  setFirstPage: React.Dispatch<React.SetStateAction<boolean>>;
+  secondPage: boolean;
+  setSecondPage: React.Dispatch<React.SetStateAction<boolean>>;
+  thirdPage: boolean;
+  setThirdPage: React.Dispatch<React.SetStateAction<boolean>>;
+})
 
 const Home: NextPage = () => {
   const [point, setPoint] = useState<LatLng[]>([]);
@@ -63,11 +75,16 @@ const Home: NextPage = () => {
   const [page, setPage] = useState<number>(0);
   const [radius, setRadius] = useState<number>(0);
   const [circle, setCircle] = useState<LatLngRadius[]>([]);
+  const [viewcircle, setViewCircle] = useState<LatLngRadius[]>([]);
+  const [viewRadius, setViewRadius] = useState<number>(0);
   const [userId, setUserId] = useState<string>('');
   const [pointFlag, setPointFlag] = useState<boolean>(false);
   const [relayFlag, setRelayFlag] = useState<boolean[]>([]);
   const [newPoint, setNewPoint] = useState<newPoint[]>([]);
   const [goRoute, setGoRoute] = useState<boolean>(false);
+  const [firstPage, setFirstPage] = useState<boolean>(false);
+  const [secondPage, setSecondPage] = useState<boolean>(false);
+  const [thirdPage, setThirdPage] = useState<boolean>(false);
 
   useEffect(() => window.addEventListener('popstate', () => setPage(Urltonumber(window.location.pathname))), [])
   return (
@@ -94,9 +111,27 @@ const Home: NextPage = () => {
         }}>
           <PageStateContext.Provider value={{ page, setPage }}>
             <ExistsToAddRouteContext.Provider value={{ goRoute, setGoRoute }}>
-              <CircleContext.Provider value={{ circle, setCircle, radius, setRadius }}>
+              <CircleContext.Provider value={{
+                circle,
+                setCircle,
+                radius,
+                setRadius,
+                viewcircle,
+                setViewCircle,
+                viewRadius,
+                setViewRadius
+              }}>
                 <UserIdContext.Provider value={{ userId, setUserId }}>
-                  <OriginPage />
+                  <ChangeShortCut.Provider value={{
+                    firstPage,
+                    setFirstPage,
+                    secondPage,
+                    setSecondPage,
+                    thirdPage,
+                    setThirdPage
+                  }}>
+                    <OriginPage />
+                  </ChangeShortCut.Provider>
                 </UserIdContext.Provider>
               </CircleContext.Provider>
             </ExistsToAddRouteContext.Provider>

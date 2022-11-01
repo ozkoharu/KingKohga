@@ -4,7 +4,7 @@ import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { BaseCheckBox } from "../../component/atoms/checkbox/BaseCheckBox";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
-import { ChangeShortCut, LocationPointContext, NewPointContext, PageStateContext, UserIdContext } from "..";
+import { ChangeShortCut, CircleContext, LocationPointContext, NewPointContext, PageStateContext, UserIdContext } from "..";
 import axios from "axios";
 import { LatLng } from "leaflet";
 import { LoadingContext } from "../_app";
@@ -29,7 +29,7 @@ const DestinationMapPage = () => {
     const { newPoint, setNewPoint, middle, setMiddle, } = useContext(NewPointContext);
     const [junkai, setJunkai] = useState(false)
     const { setPageLoading } = useContext(LoadingContext);
-
+    const { viewcircle, setViewCircle, viewRadius, setViewRadius } = useContext(CircleContext);
 
     const { firstPage } = useContext(ChangeShortCut); // 親から値を貰う
     const [isModalOpen, setIsModalOpen] = useState(!firstPage); // 貰った値を初期値とする
@@ -120,15 +120,19 @@ const DestinationMapPage = () => {
         await axios.post(PostDummyUrl, DestinationData)
             .then((res) => {
                 setPageLoading(false);
-                polyData = res.data.route;
-                setPoly(polyData);
+                console.log('res.data', res.data);
+                if (res.data.succeeded === true) {
+                    polyData = res.data.route;
+                    setPoly(polyData);
+                } else {
+                    alert('経路探索できませんでした');
+                    OnClickSetState(2, setPage);
+                }
+
             })
             .catch(e => {
                 console.log('Post Error', e)
                 setPageLoading(false);
-            })
-            .finally(() => {
-                OnClickSetState(4, setPage);
             })
 
     }
@@ -142,6 +146,8 @@ const DestinationMapPage = () => {
         await axios.post(PostOkRouteUrl, userId)
             .then((res) => {
                 console.log('resPathOk', res.data);
+                //星くんからのres.dataの様子を見て
+                //useContextに適切な形でセットしてください
             })
     }
 

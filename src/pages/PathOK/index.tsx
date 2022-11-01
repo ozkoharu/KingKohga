@@ -7,8 +7,6 @@ import { OnClickSetState } from "../../component/onClickSetState/onClickSetState
 import { BaseFooter } from "../../component/template/Footer/BaseFooter";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
 
-
-
 const DynamicMap = dynamic(() => {
     return import('../../component/map/BaseCircleMap')
 },
@@ -36,9 +34,9 @@ const PathOK = () => {
                         通行可能領域を設定する
                     </BaseButton>
                 </BaseHeader>
-                <main>
-                    <DynamicMap />
-                </main>
+
+                <DynamicMap />
+
                 <BaseFooter />
             </div>
         </>
