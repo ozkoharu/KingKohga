@@ -174,8 +174,13 @@ const AddRoutePage = () => {
         await axios.post(PostDummyUrl, PostData)
             .then((res) => {
                 setPageLoading(false);
-                polyData = res.data.route;
-                setPoly(polyData);
+                if (res.data.succeeded === true) {
+                    polyData = res.data.route;
+                    setPoly(polyData);
+                } else {
+                    alert('目的地を設定し直してください')
+                }
+
                 console.log('res', res.data.route);
                 setPointFlag(false);
             })

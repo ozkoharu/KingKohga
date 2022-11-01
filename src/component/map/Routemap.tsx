@@ -154,8 +154,8 @@ const RouteMap = () => {
     return (
         <MapContainer center={position} zoom={zoomlebel} scrollWheelZoom={false}>
             <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="http://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a> contributors'
+                url="https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png"
             />
             <ClickMarker />
             {
