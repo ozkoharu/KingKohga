@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react"
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet"
+import { Circle, MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet"
 import { LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css"
-import { LocationPointContext, NewPointContext } from "../../pages";
+import { CircleContext, LocationPointContext, NewPointContext } from "../../pages";
 //Marker壊れたとき用
 import L from "leaflet"
 import { loadComponents } from "next/dist/server/load-components";
@@ -27,21 +27,43 @@ const ClickMarker = () => {
 
     return (
         <React.Fragment>
-            {point.map((pos, index) => <Marker
-                position={pos}
-                key={index}
-                riseOnHover={true}
-                eventHandlers={{
-                    contextmenu: (e) => {
-                        if (confirm('この目的地を削除しますか？')) {
-                            let index = point.indexOf(e.latlng);
-                            point.splice(index, 1);
-                            setPoly([[]]);
+            {
+
+                point.map((pos, index) => <Marker
+                    position={pos}
+                    key={index}
+                    riseOnHover={true}
+                    eventHandlers={{
+                        contextmenu: (e) => {
+                            if (confirm('この目的地を削除しますか？')) {
+                                let index = point.indexOf(e.latlng);
+                                point.splice(index, 1);
+                                setPoly([[]]);
+                            }
                         }
-                    }
-                }}
-            >
-            </Marker>)}
+                    }}
+                >
+                </Marker>)}
+        </React.Fragment>
+    )
+}
+
+const ViewCircle = () => {
+    const { viewcircle, setViewCircle, viewRadius, setViewRadius } = useContext(CircleContext);
+
+
+    return (
+        <React.Fragment>
+            {
+                viewcircle.map((e, index) =>
+                    <Circle center={e.pos}
+                        pathOptions={{ fillColor: "blue" }}
+                        radius={e.r}
+                        key={index}
+                        stroke={false}
+                    ></Circle>
+                )
+            }
         </React.Fragment>
     )
 }
@@ -55,6 +77,7 @@ const DestinationMap = () => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <ClickMarker />
+            <ViewCircle />
         </MapContainer>
     )
 }
