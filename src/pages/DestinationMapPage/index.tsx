@@ -4,40 +4,22 @@ import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { BaseCheckBox } from "../../component/atoms/checkbox/BaseCheckBox";
 import { BaseHeader } from "../../component/template/Header/BaseHeader";
 import { OnClickSetState } from "../../component/onClickSetState/onClickSetState";
-import { LocationPointContext, NewPointContext, PageStateContext, UserIdContext } from "..";
+import { ChangeShortCut, LocationPointContext, NewPointContext, PageStateContext, UserIdContext } from "..";
 import axios from "axios";
 import { LatLng } from "leaflet";
 import { LoadingContext } from "../_app";
 import { BaseFooter } from "../../component/template/Footer/BaseFooter";
 import { newPoint } from "../AddRoutePage";
+import { Modal } from "../../component/hooks/modal";
 
 
 const PostDummyUrl = 'http://saza.kohga.local:3001/astar';
+const PostOkRouteUrl = 'http://saza.kohga.local:3001/';
 const DynamicMap = dynamic(() => {
     return import('../../component/map/DestinationMap')
 },
     { ssr: false }
 )
-
-interface Props {
-    closeHandler: () => void
-}
-const Modal: React.FC<Props> = ({
-    closeHandler,
-}) => {
-    return (
-        <>
-            <div className='modalContainer' onClick={closeHandler}>
-                <div className="modalBody">
-                    <p>モーダル</p>
-                    <div className="modalButtons">
-                        <button onClick={closeHandler}>閉じるボタン</button>
-                    </div>
-                </div>
-            </div>
-        </>
-    )
-}
 
 
 const DestinationMapPage = () => {
@@ -47,7 +29,46 @@ const DestinationMapPage = () => {
     const { newPoint, setNewPoint, middle, setMiddle, } = useContext(NewPointContext);
     const [junkai, setJunkai] = useState(false)
     const { setPageLoading } = useContext(LoadingContext);
-    const [isModalOpen, setIsModalOpen] = useState(true);
+
+
+    const { firstPage } = useContext(ChangeShortCut); // 親から値を貰う
+    const [isModalOpen, setIsModalOpen] = useState(!firstPage); // 貰った値を初期値とする
+    const modalText = [
+        [	// ページ1
+            "1. 目的地を指定する",
+            "地図上でクリック/タップして車の目的地を指定できます。指定後に経路探索ボタンを押すと、車が進む経路が表示されます。巡回するボタンをオンにして経路探索を開始すると、巡回用の経路を表示します。",
+        ],
+        [	// ページ2
+            "2. 経路を編集する",
+            "表示された経路が好ましくなければ、再び経路探索ボタンを押すことで別の経路を算出することができます。また、消したい経路あるいは目的地のピンに向かって右クリック/長押しをすると削除できます。",
+        ],
+        [	// ページ3
+            "3. 経路を確定する",
+            "確定ボタンを押すと、車が動作を開始します。車の状況を確認したい時は、画面上側にある戻るボタンから車メニューに行き、車の状況を見るボタンを押してください。",
+        ],
+    ];
+
+    // タイトルの連結
+    const concatTitles = () => {
+        const array = [];
+        for (let i = 0; i < modalText.length; i++) {
+            array.push(modalText[i][0]);
+        }
+        return array;
+    };
+
+    // 説明文の連結
+    const concatText = () => {
+        const array = [];
+        for (let i = 0; i < modalText.length; i++) {
+            array.push(modalText[i][1]);
+        }
+        return array;
+    };
+
+    const titles = concatTitles();
+    const text = concatText();
+
 
     const closeModal = useCallback(() => {
         setIsModalOpen(false);
@@ -116,6 +137,14 @@ const DestinationMapPage = () => {
         setPoint([]);
         setNewPoint([]);
     }
+    const pathOKRoute = async () => {
+        console.log('pathOkRoute');
+        await axios.post(PostOkRouteUrl, userId)
+            .then((res) => {
+                console.log('resPathOk', res.data);
+            })
+    }
+
     return (
         <>
             <div className="container map dest-map">
@@ -135,11 +164,24 @@ const DestinationMapPage = () => {
                     <BaseButton _className="button" onClick={riset}>
                         目的地リセット
                     </BaseButton>
+                    <BaseButton _className="button" onClick={pathOKRoute}>
+                        通行可能領域表示
+                    </BaseButton>
                 </BaseHeader>
 
                 <DynamicMap />
                 {
-                    isModalOpen ? <Modal closeHandler={closeModal} /> : <></>
+                    isModalOpen ? (
+                        <Modal
+                            closeHandler={closeModal}
+                            pageNum={3}
+                            titles={titles}
+                            text={text}
+                            modalID={"first"}
+                        />
+                    ) : (
+                        <></>
+                    )
                 }
                 <BaseFooter />
             </div>
