@@ -20,7 +20,7 @@ const CircleMarker = () => {
     useMapEvents({
         click(e) {
             setCircle((prevValue) => {
-                const newValue = [...prevValue, { pos: e.latlng, r: radius }]
+                const newValue = [...prevValue, { Position: e.latlng, radius: radius }]
                 console.log('newValue', newValue)
                 return newValue
             })
@@ -30,15 +30,15 @@ const CircleMarker = () => {
     return (
         <React.Fragment>
             {circle.map((e, index) =>
-                <Circle center={e.pos}
+                <Circle center={e.Position}
                     pathOptions={{ fillColor: "blue" }}
-                    radius={e.r}
+                    radius={e.radius}
                     key={index}
                     stroke={false}
                     eventHandlers={{
                         contextmenu: (e) => {
                             if (confirm('この領域を削除しますか?')) {
-                                let index = circle.indexOf({ pos: e.latlng, r: radius });
+                                let index = circle.indexOf({ Position: e.latlng, radius: radius });
                                 circle.splice(index, 1);
                                 setPoly([[]]);
                             }

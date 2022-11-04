@@ -8,8 +8,8 @@ import OriginPage from './Originpage';
 
 
 export type LatLngRadius = {
-  pos: LatLng;
-  r: number;
+  Position: LatLng;
+  radius: number;
 }
 
 export const LocationPointContext = createContext({} as {

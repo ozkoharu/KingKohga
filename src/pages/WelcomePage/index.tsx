@@ -32,31 +32,27 @@ const WelcomePage = () => {
     return (
         <>
             <div className="welcome">
+                <video autoPlay muted loop playsInline preload="metadata" disablePictureInPicture onContextMenu={() => { return false }}>
+                    <source src="../../assets/movie/video_17048352131600-VPA7DOB5.mp4" type="video/mp4" />
+                    <p>動画の再生無理</p>
+                </video>
                 <BaseHeader>
                     <h1>
                         <span>Kohga TOP</span>
                     </h1>
                 </BaseHeader>
-                <main>
-                    <ul>
-                        <li>
-                            <h2>車の利用</h2>
-                            <p>車との通信を行います</p>
-                            <BaseButton onClick={onClickCaruse} _className="button">
-                                車を使う
-                            </BaseButton>
-                        </li>
-                        <li>
-                            <h2>管理画面</h2>
-                            <p>車の管理を行います</p>
-                            <BaseButton onClick={() => OnClickSetState(7, setPage)} _className="button">
-                                車管理マネージャ
-                            </BaseButton>
-                        </li>
-                    </ul>
-                </main>
-                <aside className="left" />
-                <aside className="right" />
+                <ul>
+                    <li>
+                        <BaseButton onClick={onClickCaruse} _className="button">
+                            車を使う
+                        </BaseButton>
+                    </li>
+                    <li>
+                        <BaseButton onClick={() => OnClickSetState(7, setPage)} _className="button">
+                            車管理マネージャ
+                        </BaseButton>
+                    </li>
+                </ul>
                 <BaseFooter />
 
             </div>

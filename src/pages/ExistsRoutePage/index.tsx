@@ -7,8 +7,10 @@ import { DynamicRouteMap } from "../AddRoutePage";
 import { BaseButton } from "../../component/atoms/button/BaseButton";
 import { DynamicCarWatchPage } from "../CarWatchPage";
 
+
 const RouteNameUrl = "http://saza.kohga.local:3001/routeName"
 const reqRouteUrl = "http://saza.kohga.local:3001/reqRoute"
+const ababa = "http://saza.kohga.local:3001/getPassable"
 
 const ExistsRoutePage = () => {
     const { setPage } = useContext(PageStateContext);
@@ -31,7 +33,6 @@ const ExistsRoutePage = () => {
             .catch((e) => console.log(e))
     }, [])
 
-
     const reqRoute = async (routename: string) => {
         const postdata = {
             "userId": userId,
@@ -40,8 +41,10 @@ const ExistsRoutePage = () => {
         await axios.post(reqRouteUrl, postdata)
             .then((res) => {
                 console.log('reqroute', res.data);
-                setPoly(res.data.route);
-                setPoint(res.data.dest);
+                if (res.data.succeeded === true) {
+                    setPoly(res.data.route);
+                    setPoint(res.data.dest);
+                }
             })
             .catch((e) => console.log(e))
     }
@@ -55,6 +58,17 @@ const ExistsRoutePage = () => {
         setPoint([]);
         OnClickSetState(1, setPage)
     }
+    const path = async () => {
+        console.log('userId', userId);
+        try {
+            const res = await axios.post(ababa, userId);
+            console.log('res', res);
+        } catch (e) {
+            console.log(e);
+        } finally {
+            console.log('finally');
+        }
+    }
 
     return (
         <>
@@ -67,6 +81,7 @@ const ExistsRoutePage = () => {
                     <BaseButton onClick={goRoute} _className="button">
                         この経路に行く
                     </BaseButton>
+
 
                     <select id="sel" name="sel"
                         onChange={(e) => {

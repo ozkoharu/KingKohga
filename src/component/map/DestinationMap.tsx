@@ -28,7 +28,6 @@ const ClickMarker = () => {
     return (
         <React.Fragment>
             {
-
                 point.map((pos, index) => <Marker
                     position={pos}
                     key={index}
@@ -50,15 +49,13 @@ const ClickMarker = () => {
 
 const ViewCircle = () => {
     const { viewcircle, setViewCircle, viewRadius, setViewRadius } = useContext(CircleContext);
-
-
     return (
         <React.Fragment>
             {
                 viewcircle.map((e, index) =>
-                    <Circle center={e.pos}
+                    <Circle center={e.Position}
                         pathOptions={{ fillColor: "blue" }}
-                        radius={e.r}
+                        radius={e.radius}
                         key={index}
                         stroke={false}
                     ></Circle>
@@ -67,7 +64,22 @@ const ViewCircle = () => {
         </React.Fragment>
     )
 }
-
+const ViewPathOKCircle = () => {
+    const { circle, setCircle, radius, setRadius } = useContext(CircleContext);
+    return (
+        <React.Fragment>
+            {
+                circle.map((point, index) => <Circle
+                    center={point.Position}
+                    pathOptions={{ fillColor: "blue" }}
+                    radius={point.radius}
+                    key={index}
+                    stroke={false}
+                ></Circle>)
+            }
+        </React.Fragment>
+    )
+}
 const DestinationMap = () => {
 
     return (
@@ -77,6 +89,7 @@ const DestinationMap = () => {
                 url="https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png"
             />
             <ClickMarker />
+            <ViewPathOKCircle />
             <ViewCircle />
         </MapContainer>
     )

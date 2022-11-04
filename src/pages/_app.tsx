@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import { createContext, useState } from 'react';
 import { PageLoading } from '../component/hooks/pageLoading';
 import '../styles/modal.css'
+import '../styles/video.css'
 
 export const LoadingContext = createContext({} as {
   pageLoading: boolean,

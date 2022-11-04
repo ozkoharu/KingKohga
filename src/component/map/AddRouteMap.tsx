@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react"
-import { MapContainer, Marker, Polyline, TileLayer, useMapEvents } from "react-leaflet"
+import { Circle, MapContainer, Marker, Polyline, TileLayer, useMapEvents } from "react-leaflet"
 import { LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css"
-import { LocationPointContext, NewPointContext } from "../../pages";
+import { CircleContext, LocationPointContext, NewPointContext } from "../../pages";
 //Marker壊れたとき用
 import * as L from "leaflet";
 import { kMaxLength } from "buffer";
@@ -62,7 +62,6 @@ const RouteMap = () => {
             </React.Fragment>
         )
     }
-
     const MiddleClickMarker = () => {
         useMapEvents({
             click(e) {

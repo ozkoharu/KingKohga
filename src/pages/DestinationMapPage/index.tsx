@@ -14,7 +14,7 @@ import { Modal } from "../../component/hooks/modal";
 
 
 const PostDummyUrl = 'http://saza.kohga.local:3001/astar';
-const PostOkRouteUrl = 'http://saza.kohga.local:3001/';
+const PostOkRouteUrl = 'http://saza.kohga.local:3001/getPassable';
 const DynamicMap = dynamic(() => {
     return import('../../component/map/DestinationMap')
 },
@@ -30,7 +30,7 @@ const DestinationMapPage = () => {
     const [junkai, setJunkai] = useState(false)
     const { setPageLoading } = useContext(LoadingContext);
     const { viewcircle, setViewCircle, viewRadius, setViewRadius } = useContext(CircleContext);
-
+    const { circle, setCircle, radius, setRadius } = useContext(CircleContext);
     const { firstPage } = useContext(ChangeShortCut); // 親から値を貰う
     const [isModalOpen, setIsModalOpen] = useState(!firstPage); // 貰った値を初期値とする
     const modalText = [
@@ -123,7 +123,9 @@ const DestinationMapPage = () => {
                 console.log('res.data', res.data);
                 if (res.data.succeeded === true) {
                     polyData = res.data.route;
+                    console.log('res.data.route', res.data.route);
                     setPoly(polyData);
+                    OnClickSetState(4, setPage);
                 } else {
                     alert('経路探索できませんでした');
                     OnClickSetState(2, setPage);
@@ -142,13 +144,23 @@ const DestinationMapPage = () => {
         setNewPoint([]);
     }
     const pathOKRoute = async () => {
+        const UserIdPostData = {
+            "userId": userId
+        }
         console.log('pathOkRoute');
-        await axios.post(PostOkRouteUrl, userId)
-            .then((res) => {
-                console.log('resPathOk', res.data);
-                //星くんからのres.dataの様子を見て
-                //useContextに適切な形でセットしてください
-            })
+        try {
+            console.log('userId', userId);
+            const res = await axios.post(PostOkRouteUrl, UserIdPostData)
+            if (res.data.succeeded === true) {
+                console.log('res.data.passablePoints', res.data.passablePoints);
+                setCircle(res.data.passablePoints);
+                console.log('circle', circle);
+            }
+            console.log('res', res);
+        } catch (error) {
+            console.log('Error', error);
+        }
+
     }
 
     return (
